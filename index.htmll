@@ -189,19 +189,19 @@
     <h1>קולולולו! חוגגים חינה 🎉</h1>
     <p class="subtitle">הנה דרכי ההגעה לאירוע המרגש שלנו:</p>
 
-    <div class="nav-container">
+ <div class="nav-container">
 
-        <a href="הדבק_כאן_את_הלינק_של_WAZE_לחניה" class="nav-card parking">
+        <a href="https://ul.waze.com/ul?place=ChIJX4aHeMCuHRURICdFWKisaPE&ll=32.66259150%2C35.10484200&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" class="nav-card parking">
             <div class="icon-circle">🅿️</div>
-            <div class="card-title">לחניה</div>
-            <div class="card-desc">ניווט ישיר לחניון הקרוב ביותר לאולם</div>
+            <div class="card-title">חניה</div>
+            <div class="card-desc">ניווט ישיר לחניון הקרוב ביותר</div>
             <div class="action-btn">לחצו לניווט בוויז</div>
         </a>
 
-        <a href="הדבק_כאן_את_הלינק_של_WAZE_לבית" class="nav-card home">
+        <a href="https://ul.waze.com/ul?place=ChIJ2fqjE76uHRURypoZ-C-lfZ4&ll=32.66185960%2C35.10944690&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" class="nav-card home">
             <div class="icon-circle">🏡</div>
-            <div class="card-title">לאולם</div>
-            <div class="card-desc">ניווט ישיר לפתח האולם/הבית</div>
+            <div class="card-title">בית</div>
+            <div class="card-desc">ניווט ישיר לפתח הבית</div>
             <div class="action-btn">לחצו לניווט בוויז</div>
         </a>
 
