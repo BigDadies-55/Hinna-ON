@@ -3,214 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חוגגים חינה - ניווט לאירוע</title>
-    <style>
-        /* הגדרות בסיסיות ורקע בסגנון מרוקאי */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            /* רקע עשיר בצבע בורדו עמוק עם טקסטורת ערבסק עדינה */
-            background-color: #800000; 
-            background-image: url('https://www.transparenttextures.com/patterns/az-subtle.png'); 
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            text-align: center;
-            padding: 20px;
-        }
-
-        /* כותרת ראשית חגיגית */
-        h1 {
-            color: #f1c40f; /* זהב מלכותי */
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            font-family: 'Suez One', serif; /* מומלץ להשתמש בפונט עברי חגיגי אם זמין */
-        }
-
-        /* כותרת משנה */
-        .subtitle {
-            color: #fff;
-            font-size: 1.2rem;
-            margin-bottom: 2.5rem;
-            opacity: 0.9;
-        }
-
-        /* מיכל הכפתורים */
-        .nav-container {
-            display: flex;
-            gap: 25px;
-            max-width: 90%;
-            flex-wrap: wrap; /* מותאם לנייד */
-            justify-content: center;
-        }
-
-        /* עיצוב כללי לכפתור - סגנון קטיפה עשיר */
-        .nav-card {
-            background: #fff; /* לבן נקי כדי שהתוכן יבלוט */
-            border-radius: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-            width: 300px;
-            padding: 40px;
-            text-decoration: none;
-            color: #333;
-            transition: all 0.4s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            border: 3px solid #f1c40f; /* מסגרת זהב */
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* עיטור ערבסק עדין ברקע הקארד */
-        .nav-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://www.transparenttextures.com/patterns/arabesque.png');
-            opacity: 0.05;
-            z-index: 0;
-        }
-
-        /* אפקט מעבר עכבר/לחיצה חגיגי */
-        .nav-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            border-color: #fff; /* מסגרת לבנה כשעוברים מעל */
-        }
-
-        /* עיצוב האייקון הגרפי בתוך עיגול */
-        .icon-circle {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 50px;
-            margin-bottom: 25px;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        /* צבעים ייחודיים לכל כפתור בסגנון חינה */
-        .parking .icon-circle {
-            /* בורדו עמוק משולב בזהב */
-            background: linear-gradient(135deg, #a522a 0%, #800000 100%);
-            color: #f1c40f; 
-            border: 4px solid #f1c40f;
-        }
-
-        .home .icon-circle {
-            /* טורקיז עשיר משולב בזהב */
-            background: linear-gradient(135deg, #1a 0%, #16a085 100%);
-            color: #f1c40f;
-            border: 4px solid #f1c40f;
-        }
-
-        /* עיצוב הטקסט */
-        .card-title {
-            font-size: 1.8rem;
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: #2c3e50;
-            position: relative;
-            z-index: 1;
-        }
-
-        .card-desc {
-            font-size: 1.1rem;
-            color: #7f8c8d;
-            margin-bottom: 25px;
-            line-height: 1.4;
-            position: relative;
-            z-index: 1;
-        }
-
-        /* כפתור "ניווט" קטן בצורת חותמת מרוקאית */
-        .action-btn {
-            color: white;
-            padding: 12px 25px;
-            border-radius: 30px;
-            font-weight: bold;
-            font-size: 1rem;
-            transition: background-color 0.3s;
-            position: relative;
-            z-index: 1;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-        }
-
-        .parking .action-btn { 
-            background: linear-gradient(135deg, #800000 0%, #a52a2a 100%); 
-        }
-        .home .action-btn { 
-            background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%);
-        }
-
-        /* עיטור פינה בסגנון מנדלה */
-        .corner-decoration {
-            position: fixed;
-            width: 150px;
-            height: 150px;
-            opacity: 0.1;
-            z-index: -1;
-            background-image: url('https://www.transparenttextures.com/patterns/gplay.png'); /* טקסטורת מנדלה מופשטת */
-        }
-        .top-right { top: -20px; right: -20px; transform: rotate(45deg); }
-        .bottom-left { bottom: -20px; left: -20px; transform: rotate(225deg); }
-
-        /* התאמה למסכים קטנים מאוד (ניידים) */
-        @media (max-width: 650px) {
-            h1 { font-size: 2rem; }
-            .subtitle { font-size: 1rem; }
-            .nav-card {
-                width: 100%;
-                padding: 30px 20px;
-            }
-            .icon-circle { width: 80px; height: 80px; font-size: 40px; }
-            .card-title { font-size: 1.6rem; }
-        }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Suez+One&display=swap" rel="stylesheet">
-</head>
-<body>
-
-    <div class="corner-decoration top-right"></div>
-    <div class="corner-decoration bottom-left"></div>
-
-    <h1>קולולולו! נועה ועומר חוגגים חינה 🎉</h1>
-    <p class="subtitle">הנה דרכי ההגעה לאירוע המרגש שלנו:</p>
-
- <div class="nav-container">
-
-        
-        <a href="https://ul.waze.com/ul?place=ChIJ2fqjE76uHRURypoZ-C-lfZ4&ll=32.66185960%2C35.10944690&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" class="nav-card home">
-            <div class="icon-circle">🏡</div>
-            <div class="card-title">בית</div>
-            <div class="card-desc">ניווט ישיר לפתח הבית</div>
-            <div class="action-btn">לחצו לניווט בוויז</div>
-        </a>
-     
-        <a href="https://ul.waze.com/ul?place=ChIJX4aHeMCuHRURICdFWKisaPE&ll=32.66259150%2C35.10484200&navigate=yes&utm_campaign=default&utm_source=waze_website&utm_medium=lm_share_location" class="nav-card parking">
-            <div class="icon-circle">🅿️</div>
-            <div class="card-title">חניה</div>
-            <div class="card-desc">ניווט ישיר לחניון הקרוב ביותר</div>
-            <div class="action-btn">לחצו לניווט בוויז</div>
-        </a>
-
-     <!DOCTYPE html>
-<html lang="he" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>חוגגים חינה - ניווט וקשר</title>
     <style>
         /* עיצוב כללי ורקע חגיגי בסגנון חינה */
@@ -352,6 +144,7 @@
 </head>
 <body>
 
+   
     <h1>קולולולו! נועה ועומר חוגגים חינה 🎉</h1>
     <p class="subtitle">כל הדרכים להגיע ולחגוג איתנו:</p>
 
@@ -370,7 +163,6 @@
     </div>
 
     <div class="phone-section">
-        <span class="phone-header">לבירורים:</span>
         <div class="phone-grid">
             <a href="tel:0526039454" class="phone-link">
                 <span>📞</span>
@@ -381,11 +173,6 @@
                 <strong>אהובית</strong>
             </a>
         </div>
-    </div>
-
-</body>
-</html>
-
     </div>
 
 </body>
