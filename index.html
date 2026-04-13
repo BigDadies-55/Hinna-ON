@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>חינה של נועה ועומר - ניווט</title>
+    <style>
+        /* פונטים ורקע מרוקאי עשיר */
+        @import url('https://fonts.googleapis.com/css2?family=Suez+One&display=swap');
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #800000; /* בורדו בסיס */
+            /* רקע קטיפה מרוקאי עם מנדלות זהב עדינות */
+            background-image: url('https://www.transparenttextures.com/patterns/arabesque.png'),
+                              linear-gradient(135deg, #800000 0%, #a52a2a 100%);
+            background-blend-mode: overlay;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 15px;
+            box-sizing: border-box;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* כותרת ראשית חגיגית */
+        h1 {
+            color: #f1c40f; /* זהב מלכותי */
+            font-size: clamp(2.2rem, 9vw, 3.5rem);
+            margin: 25px 0 5px 0;
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.7);
+            font-family: 'Suez One', serif;
+            position: relative;
+            z-index: 2;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.95;
+            letter-spacing: 0.5px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* מיכל הכפתורים */
+        .nav-container {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+            max-width: 600px;
+            flex-direction: column; /* ברירת מחדל למובייל */
+            justify-content: center;
+            margin-bottom: 35px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* עיצוב כפתור ניווט - עם מסגרת זהב מעוטרת */
+        .nav-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+            padding: 20px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            /* מסגרת זהב ערבסקית מורכבת */
+            border: 6px solid;
+            border-image: url('https://w7.pngwing.com/pngs/391/363/png-transparent-islamic-geometric-patterns-arabesque-calligraphy-pattern-leaf-text-symmetric.png') 30 stretch;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-card:active {
+            transform: scale(0.97);
+        }
+
+        /* אייקון בתוך עיגול עם טבעת זהב נוספת */
+        .icon-circle {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            margin-left: 18px;
+            flex-shrink: 0;
+            border: 3px solid #f1c40f;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        
+        /* טבעת זהב פנימית לעיטור */
+        .icon-circle::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            border: 1px solid #f1c40f;
+            opacity: 0.5;
+        }
+
+        .parking .icon-circle {
+            background: linear-gradient(135deg, #a52a2a 0%, #800000 100%);
+        }
+
+        .home .icon-circle {
+            background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+        }
+
+        .text-content {
+            text-align: right;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin: 0;
+        }
+
+        .card-desc {
+            font-size: 1rem;
+            color: #7f8c8d;
+            margin: 4px 0 0 0;
+        }
+
+        /* סקשן טלפונים - עם מסגרת מעוטרת נוספת */
+        .phone-section {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            border-radius: 20px;
+            border: 2px dashed #f1c40f;
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 2;
+        }
+
+        .phone-header {
+            color: #f1c40f;
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            font-family: 'Suez One', serif;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        }
+
+        .phone-grid {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .phone-link {
+            color: #fff;
+            text-decoration: none;
+            background: rgba(0,0,0,0.6);
+            padding: 15px 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border: 1.5px solid #f1c40f;
+            transition: all 0.3s;
+            flex: 1;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .phone-link span {
+            font-size: 1.4rem;
+        }
+
+        .phone-link:hover {
+            background: #f1c40f;
+            color: #800000;
+        }
+
+        /* עיטורי פינה גרפיים - מנדלות זהב */
+        .corner {
+            position: fixed;
+            width: 120px;
+            height: 120px;
+            opacity: 0.15;
+            z-index: 1;
+            background-image: url('https://w7.pngwing.com/pngs/92/728/png-transparent-henna-pattern-mandala-tattoo-pattern-symmetric-henna-tattoo-symmetry.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        .top-right { top: -10px; right: -10px; }
+        .bottom-left { bottom: -10px; left: -10px; transform: rotate(180deg); }
+
+        /* התאמה למסכים רחבים (טאבלט/מחשב) */
+        @media (min-width: 600px) {
+            .nav-container {
+                flex-direction: row;
+            }
+            .nav-card {
+                flex-direction: column;
+                flex: 1;
+                padding: 40px 30px;
+            }
+            .icon-circle {
+                margin-left: 0;
+                margin-bottom: 20px;
+                width: 90px;
+                height: 90px;
+                font-size: 45px;
+            }
+            .text-content {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="corner top-right"></div>
+    <div class="corner bottom-left"></div>
+
+    <h1>קולולולו! <br> נועה ועומר חוגגים חינה 🎉</h1>
+    <p class="subtitle">שמחים שאתם באים לחגוג איתנו!</p>
+
+    <div class="nav-container">
+
+        <a href="https://ul.waze.com/ul?place=ChIJX4aHeMCuHRURICdFWKisaPE&ll=32.66259150%2C35.10484200&navigate=yes" class="nav-card parking">
+            <div class="icon-circle">🅿️</div>
+            <div class="text-content">
+                <div class="card-title">לחניה</div>
+                <div class="card-desc">חניון סמוך למקום האירוע</div>
+            </div>
+        </a>
+
+        <a href="https://ul.waze.com/ul?place=ChIJ2fqjE76uHRURypoZ-C-lfZ4&ll=32.66185960%2C35.10944690&navigate=yes" class="nav-card home">
+            <div class="icon-circle">🏡</div>
+            <div class="text-content">
+                <div class="card-title">לבית</div>
+                <div class="card-desc">הגעה ישירה למיקום החגיגה</div>
+            </div>
+        </a>
+
+    </div>
+   
+    <div class="phone-section">
+        <div class="phone-header">לבירורים נוספים:</div>
+        <div class="phone-grid">
+            <a href="tel:0526039454" class="phone-link">
+                <span>📞</span> אהרוני
+            </a>
+            <a href="tel:0524800922" class="phone-link">
+                <span>📞</span> אהובית
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>
