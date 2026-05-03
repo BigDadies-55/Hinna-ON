@@ -158,6 +158,29 @@
             margin: 4px 0 0 0;
         }
 
+        /* אייקון ניווט בקצה הכרטיס */
+        .nav-arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f1c40f 0%, #e67e22 100%);
+            color: #800000;
+            font-size: 24px;
+            font-weight: bold;
+            margin-right: 12px;
+            flex-shrink: 0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border: 2px solid #800000;
+        }
+        .nav-arrow svg {
+            width: 26px;
+            height: 26px;
+            fill: #800000;
+        }
+
         /* סקשן טלפונים - עם מסגרת מעוטרת נוספת */
         .phone-section {
             background: rgba(255, 255, 255, 0.15);
@@ -226,6 +249,109 @@
         .top-right { top: -10px; right: -10px; }
         .bottom-left { bottom: -10px; left: -10px; transform: rotate(180deg); }
 
+        /* כפתור פתיחת פופאפ */
+        .info-btn {
+            background: #f1c40f;
+            color: #800000;
+            border: 2px solid #800000;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-family: 'Heebo', 'Segoe UI', Tahoma, sans-serif;
+            font-weight: 900;
+            font-size: 1.1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+        .info-btn:hover {
+            background: #fff;
+            transform: translateY(-2px);
+        }
+        .info-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* רקע כהה מאחורי הפופאפ */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
+            backdrop-filter: blur(4px);
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        /* תיבת הפופאפ */
+        .modal-box {
+            background: #fff;
+            border-radius: 20px;
+            padding: 40px 25px 30px 25px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+            border: 4px solid #f1c40f;
+            position: relative;
+            text-align: right;
+            color: #2c3e50;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        /* כפתור סגירה X */
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #800000;
+            color: #fff;
+            border: 2px solid #f1c40f;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.4);
+            transition: all 0.2s ease;
+            line-height: 1;
+            padding: 0;
+        }
+        .modal-close:hover {
+            background: #f1c40f;
+            color: #800000;
+        }
+
+        .modal-title {
+            font-family: 'Suez One', serif;
+            color: #800000;
+            font-size: 1.6rem;
+            margin: 0 0 15px 0;
+            text-align: center;
+        }
+
+        .modal-content {
+            font-family: 'Heebo', 'Segoe UI', Tahoma, sans-serif;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #2c3e50;
+        }
+
         /* התאמה למסכים רחבים (טאבלט/מחשב) */
         @media (min-width: 600px) {
             .nav-container {
@@ -246,6 +372,10 @@
             .text-content {
                 text-align: center;
             }
+            .nav-arrow {
+                margin-right: 0;
+                margin-top: 18px;
+            }
         }
     </style>
 </head>
@@ -257,6 +387,10 @@
     <h1>קולולולו! <br> נועה ועומר חוגגים חינה 🎉</h1>
     <p class="subtitle">שמחים שאתם באים לחגוג איתנו!</p>
 
+    <button class="info-btn" style="display:none;" onclick="document.getElementById('infoModal').classList.add('active')">
+        ℹ️ מידע חשוב לאורחים
+    </button>
+
     <div class="nav-container">
 
         <a href="https://ul.waze.com/ul?place=ChIJ2fqjE76uHRURypoZ-C-lfZ4&ll=32.66185960%2C35.10944690&navigate=yes" class="nav-card home">
@@ -265,6 +399,11 @@
             <div class="text-content">
                 <div class="card-title">לבית - הורדת האורחים</div>
                 <div class="card-desc">הגעה ישירה למיקום החגיגה להורדת האורחים</div>
+            </div>
+            <div class="nav-arrow" aria-label="ניווט">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/>
+                </svg>
             </div>
         </a>
 
@@ -275,8 +414,26 @@
                 <div class="card-title">לחניה</div>
                 <div class="card-desc">חניון סמוך למקום האירוע - שם יחכו לכם הסעות לאירוע</div>
             </div>
+            <div class="nav-arrow" aria-label="ניווט">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/>
+                </svg>
+            </div>
         </a>
 
+    </div>
+
+    <!-- פופאפ מידע - אפשר לערוך את הטקסט בתוך .modal-content -->
+    <div class="modal-overlay" id="infoModal" onclick="if(event.target===this)this.classList.remove('active')">
+        <div class="modal-box">
+            <button class="modal-close" onclick="document.getElementById('infoModal').classList.remove('active')" aria-label="סגור">✕</button>
+            <h2 class="modal-title">מידע חשוב 🌟</h2>
+            <div class="modal-content">
+                <p>כאן אפשר לכתוב את כל המידע שתרצו להעביר לאורחים.</p>
+                <p>למשל: קוד לבוש, שעת התחלה, הוראות חניה מיוחדות, או כל הודעה אחרת.</p>
+                <p>פשוט ערכו את הטקסט הזה בקוד ה-HTML בתוך התגית <strong>modal-content</strong>.</p>
+            </div>
+        </div>
     </div>
 
     <div class="phone-section">
