@@ -6,7 +6,7 @@
     <title>חינה של נועה ועומר - ניווט</title>
     <style>
         /* פונטים ורקע מרוקאי עשיר */
-        @import url('https://fonts.googleapis.com/css2?family=Suez+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Suez+One&family=Heebo:wght@700;900&display=swap');
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -66,7 +66,7 @@
             background: #fff;
             border-radius: 20px;
             box-shadow: 0 12px 30px rgba(0,0,0,0.5);
-            padding: 20px;
+            padding: 30px 20px 20px 20px;
             text-decoration: none;
             color: #333;
             transition: all 0.3s ease;
@@ -76,11 +76,31 @@
             border: 6px solid;
             border-image: url('https://w7.pngwing.com/pngs/391/363/png-transparent-islamic-geometric-patterns-arabesque-calligraphy-pattern-leaf-text-symmetric.png') 30 stretch;
             position: relative;
-            overflow: hidden;
+            overflow: visible;
+            margin-top: 30px;
         }
 
         .nav-card:active {
             transform: scale(0.97);
+        }
+
+        /* תווית שלב על הכרטיס - בולטת מעל הקצה העליון */
+        .step-badge {
+            position: absolute;
+            top: -32px;
+            right: 20px;
+            background: #f1c40f;
+            color: #800000;
+            font-weight: 900;
+            font-size: 1.3rem;
+            padding: 10px 24px;
+            border-radius: 30px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.5);
+            font-family: 'Heebo', 'Segoe UI', Tahoma, sans-serif;
+            z-index: 5;
+            border: 3px solid #800000;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
         }
 
         /* אייקון בתוך עיגול עם טבעת זהב נוספת */
@@ -98,7 +118,7 @@
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
             position: relative;
         }
-        
+
         /* טבעת זהב פנימית לעיטור */
         .icon-circle::after {
             content: '';
@@ -214,7 +234,7 @@
             .nav-card {
                 flex-direction: column;
                 flex: 1;
-                padding: 40px 30px;
+                padding: 50px 30px 40px 30px;
             }
             .icon-circle {
                 margin-left: 0;
@@ -239,24 +259,26 @@
 
     <div class="nav-container">
 
-        <a href="https://ul.waze.com/ul?place=ChIJX4aHeMCuHRURICdFWKisaPE&ll=32.66259150%2C35.10484200&navigate=yes" class="nav-card parking">
-            <div class="icon-circle">🅿️</div>
+        <a href="https://ul.waze.com/ul?place=ChIJ2fqjE76uHRURypoZ-C-lfZ4&ll=32.66185960%2C35.10944690&navigate=yes" class="nav-card home">
+            <div class="step-badge">שלב 1</div>
+            <div class="icon-circle">🏡</div>
             <div class="text-content">
-                <div class="card-title">לחניה</div>
-                <div class="card-desc">חניון סמוך למקום האירוע</div>
+                <div class="card-title">לבית - הורדת האורחים</div>
+                <div class="card-desc">הגעה ישירה למיקום החגיגה להורדת האורחים</div>
             </div>
         </a>
 
-        <a href="https://ul.waze.com/ul?place=ChIJ2fqjE76uHRURypoZ-C-lfZ4&ll=32.66185960%2C35.10944690&navigate=yes" class="nav-card home">
-            <div class="icon-circle">🏡</div>
+        <a href="https://ul.waze.com/ul?place=ChIJX4aHeMCuHRURICdFWKisaPE&ll=32.66259150%2C35.10484200&navigate=yes" class="nav-card parking">
+            <div class="step-badge">שלב 2</div>
+            <div class="icon-circle">🅿️</div>
             <div class="text-content">
-                <div class="card-title">לבית</div>
-                <div class="card-desc">הגעה ישירה למיקום החגיגה</div>
+                <div class="card-title">לחניה</div>
+                <div class="card-desc">חניון סמוך למקום האירוע - שם יחכו לכם הסעות לאירוע</div>
             </div>
         </a>
 
     </div>
-   
+
     <div class="phone-section">
         <div class="phone-header">לבירורים נוספים:</div>
         <div class="phone-grid">
