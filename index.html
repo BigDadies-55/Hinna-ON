@@ -3,705 +3,505 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>חינה של נועה ועומר - ניווט</title>
-    <style>
-        /* ===== פונטים מרוקאיים ===== */
-        @import url('https://fonts.googleapis.com/css2?family=Suez+One&family=Heebo:wght@400;700;900&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap');
+    <title>חינה של נועה ועומר</title>
 
-        /* ===== משתני צבעים מרוקאיים עשירים ===== */
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700;900&family=Assistant:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* ──────────────────────────────────────
+           ORGANIC ZEN — פלטת צבעים טבעית
+        ────────────────────────────────────── */
         :root {
-            --bordeaux: #6e1414;
-            --bordeaux-light: #8b1a1a;
-            --gold: #f5c542;
-            --gold-deep: #d4a017;
-            --gold-light: #fff3b0;
-            --emerald: #1f6f54;
-            --teal: #0a4a4a;
-            --cream: #fdf6e3;
-            --ink: #2b1a0e;
+            --cream:       #f5f0e8;
+            --cream-deep:  #ede5d5;
+            --paper:       #faf7f2;
+            --ink:         #2c2018;
+            --ink-soft:    #4a3828;
+            --ink-muted:   #7a6a58;
+            --green:       #5c7a5e;
+            --green-light: #8aad8c;
+            --green-pale:  #d4e6d5;
+            --terracotta:  #a0624a;
+            --sand:        #c8a882;
+            --sand-light:  #dfc9aa;
+            --border:      #d8ccbc;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-        /* ===== רקע מרוקאי קטיפתי ===== */
         body {
-            font-family: 'Heebo', 'Frank Ruhl Libre', 'Segoe UI', sans-serif;
-            background-color: var(--bordeaux);
+            font-family: 'Assistant', sans-serif;
+            background-color: var(--cream);
             background-image:
-                radial-gradient(circle at 20% 10%, rgba(245,197,66,0.18) 0%, transparent 40%),
-                radial-gradient(circle at 80% 90%, rgba(31,111,84,0.25) 0%, transparent 45%),
-                url('https://www.transparenttextures.com/patterns/arabesque.png'),
-                linear-gradient(135deg, #4a0d0d 0%, #6e1414 50%, #8b1a1a 100%);
-            background-blend-mode: normal, normal, overlay, normal;
-            margin: 0;
+                /* טקסטורת נייר עדינה */
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E"),
+                radial-gradient(ellipse at 50% 0%, rgba(92, 122, 94, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 100%, rgba(160, 98, 74, 0.06) 0%, transparent 50%);
+            color: var(--ink);
+            direction: rtl;
+            text-align: center;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            text-align: center;
-            padding: 20px 15px 40px;
-            color: #fff;
-            position: relative;
+            padding: 0 16px 60px;
             overflow-x: hidden;
         }
 
-        /* ===== כתר עליון - עיטור קשת מרוקאית ===== */
-        .top-ornament {
+        /* ══════════════════════════════════════
+           כותרת עליונה — רצועת עשבים
+        ══════════════════════════════════════ */
+        .top-strip {
             width: 100%;
-            max-width: 600px;
+            background: var(--green);
+            padding: 6px 0;
             display: flex;
             justify-content: center;
-            margin-bottom: -10px;
-            position: relative;
-            z-index: 2;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 36px;
         }
-        .top-ornament svg {
-            width: 100%;
-            max-width: 380px;
-            height: auto;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
-        }
-
-        /* ===== כותרת ראשית ===== */
-        h1 {
-            color: var(--gold);
-            font-size: clamp(2rem, 8vw, 3.2rem);
-            margin: 10px 0 5px;
-            text-shadow: 3px 3px 8px rgba(0,0,0,0.7), 0 0 20px rgba(245,197,66,0.3);
-            font-family: 'Suez One', 'Frank Ruhl Libre', serif;
-            position: relative;
-            z-index: 2;
-            line-height: 1.15;
-        }
-        h1 .ululu {
-            display: block;
-            font-size: 0.7em;
-            color: var(--gold-light);
+        .top-strip span {
+            color: rgba(255,255,255,0.75);
+            font-size: 0.7rem;
             letter-spacing: 4px;
-            margin-bottom: 8px;
+            font-weight: 300;
+            text-transform: uppercase;
+            font-family: 'Assistant', sans-serif;
         }
+        .top-strip-leaf { color: rgba(255,255,255,0.5); font-size: 0.85rem; }
 
-        /* קישוט מתחת לכותרת - שני עלים ויהלום */
-        .title-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin: 15px 0 8px;
-            color: var(--gold);
-            position: relative;
-            z-index: 2;
-        }
-        .title-divider .dot {
-            width: 8px;
-            height: 8px;
-            background: var(--gold);
-            transform: rotate(45deg);
-            box-shadow: 0 0 8px rgba(245,197,66,0.6);
-        }
-        .title-divider .line {
-            width: 50px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-        }
-        .title-divider .star {
-            font-size: 1.3rem;
-            color: var(--gold);
-        }
-
-        .subtitle {
-            font-size: 1.15rem;
-            margin: 0 0 18px;
-            opacity: 0.95;
-            letter-spacing: 0.5px;
-            position: relative;
-            z-index: 2;
-            font-weight: 500;
-            color: var(--gold-light);
-        }
-
-        /* ===== חמסה מעוטרת ===== */
-        .hamsa-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 18px;
-            margin: 5px 0 25px;
-            position: relative;
-            z-index: 2;
-        }
-        .hamsa-row .symbol {
-            font-size: 1.6rem;
-            color: var(--gold);
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            opacity: 0.95;
-        }
-
-        /* ===== מיכל הכפתורים ===== */
-        .nav-container {
-            display: flex;
-            gap: 35px 20px;
+        /* ══════════════════════════════════════
+           קישוט בוטני עליון (SVG עשב/ענף)
+        ══════════════════════════════════════ */
+        .botanical-top {
             width: 100%;
-            max-width: 600px;
-            flex-direction: column;
-            justify-content: center;
-            margin: 15px 0 35px;
-            position: relative;
-            z-index: 2;
-            padding-top: 25px;
-        }
-
-        /* ===== כרטיס ניווט בסגנון קשת מרוקאית ===== */
-        .nav-card {
-            background:
-                radial-gradient(circle at top, var(--gold-light) 0%, transparent 60%),
-                linear-gradient(180deg, var(--cream) 0%, #fff 100%);
-            border-radius: 24px 24px 18px 18px;
-            box-shadow:
-                0 12px 30px rgba(0,0,0,0.5),
-                inset 0 0 0 3px var(--gold),
-                inset 0 0 0 6px var(--bordeaux),
-                inset 0 0 0 8px var(--gold);
-            padding: 32px 22px 22px;
-            text-decoration: none;
-            color: var(--ink);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: visible;
-        }
-        .nav-card:active { transform: scale(0.97); }
-
-        /* קשת מרוקאית בראש הכרטיס - עיטור */
-        .nav-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 22px;
-            background: var(--bordeaux);
-            border-radius: 0 0 50% 50% / 0 0 100% 100%;
-            border: 3px solid var(--gold);
-            border-top: none;
-            z-index: 4;
-        }
-        /* יהלום קטן בקשת */
-        .nav-card::after {
-            content: '✦';
-            position: absolute;
-            top: 0px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: var(--gold);
-            font-size: 14px;
-            z-index: 5;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.5);
-        }
-
-        /* ===== תווית שלב מעל הכרטיס ===== */
-        .step-badge {
-            position: absolute;
-            top: -32px;
-            right: 20px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
-            color: var(--bordeaux);
-            font-weight: 900;
-            font-size: 1.25rem;
-            padding: 10px 24px;
-            border-radius: 30px;
-            box-shadow: 0 6px 14px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.4);
-            font-family: 'Heebo', sans-serif;
-            z-index: 5;
-            border: 3px solid var(--bordeaux);
-            letter-spacing: 0.5px;
-            white-space: nowrap;
-        }
-        /* קישוטי כוכב משני צידי תווית השלב */
-        .step-badge::before,
-        .step-badge::after {
-            content: '✦';
-            font-size: 0.85rem;
-            margin: 0 6px;
-            opacity: 0.7;
-        }
-
-        /* ===== עיגול אייקון מרכזי ===== */
-        .icon-circle {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 36px;
-            margin-left: 18px;
-            flex-shrink: 0;
-            background: linear-gradient(135deg, var(--bordeaux) 0%, var(--bordeaux-light) 100%);
-            border: 3px solid var(--gold);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.35), inset 0 0 12px rgba(0,0,0,0.3);
-            position: relative;
-        }
-        .icon-circle::before {
-            content: '';
-            position: absolute;
-            inset: -7px;
-            border-radius: 50%;
-            border: 1.5px dashed var(--gold);
+            max-width: 520px;
+            margin-bottom: -8px;
             opacity: 0.6;
         }
-        .icon-circle::after {
+
+        /* ══════════════════════════════════════
+           כותרת ראשית
+        ══════════════════════════════════════ */
+        .main-card {
+            background: var(--paper);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 40px 30px 36px;
+            max-width: 520px;
+            width: 100%;
+            position: relative;
+            box-shadow:
+                0 2px 8px rgba(44, 32, 24, 0.07),
+                0 12px 40px rgba(44, 32, 24, 0.05);
+        }
+        /* פינות עשב דקורטיביות */
+        .main-card::before {
             content: '';
             position: absolute;
-            inset: -12px;
-            border-radius: 50%;
-            border: 1px solid var(--gold);
-            opacity: 0.3;
+            inset: 8px;
+            border: 1px solid var(--sand-light);
+            border-radius: 2px;
+            pointer-events: none;
         }
 
-        .text-content {
-            text-align: right;
-            flex-grow: 1;
-        }
-        .card-title {
-            font-size: 1.4rem;
-            font-weight: 900;
-            color: var(--bordeaux);
-            margin: 0;
-            font-family: 'Suez One', 'Heebo', serif;
-            letter-spacing: 0.3px;
-        }
-        .card-desc {
-            font-size: 0.95rem;
-            color: var(--ink);
-            margin: 6px 0 0;
-            opacity: 0.85;
-            line-height: 1.4;
-        }
-
-        /* ===== חץ ניווט ===== */
-        .nav-arrow {
+        .event-label {
+            font-size: 0.72rem;
+            letter-spacing: 5px;
+            color: var(--green);
+            font-weight: 500;
+            text-transform: uppercase;
+            margin-bottom: 22px;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 52px;
-            height: 52px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
-            color: var(--bordeaux);
-            margin-right: 12px;
-            flex-shrink: 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.4);
-            border: 2.5px solid var(--bordeaux);
+            gap: 10px;
         }
-        .nav-arrow svg {
-            width: 26px;
-            height: 26px;
-            fill: var(--bordeaux);
+        .event-label::before, .event-label::after {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: var(--green-light);
         }
 
-        /* ===== מפריד מרוקאי בין סקציות ===== */
-        .moroccan-divider {
+        .main-title {
+            font-family: 'Frank Ruhl Libre', serif;
+            font-size: clamp(2.2rem, 8vw, 3.4rem);
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1.15;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+        .main-title .names {
+            display: block;
+            font-size: 0.68em;
+            font-weight: 400;
+            color: var(--terracotta);
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+            font-family: 'Assistant', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .ornament-row {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 14px;
-            width: 100%;
-            max-width: 600px;
-            margin: 5px 0 20px;
-            position: relative;
-            z-index: 2;
+            margin: 20px 0;
         }
-        .moroccan-divider .line {
-            flex: 1;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        .ornament-row::before, .ornament-row::after {
+            content: '';
+            height: 1px;
+            width: 60px;
+            background: linear-gradient(90deg, transparent, var(--sand));
         }
-        .moroccan-divider .center {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--gold);
-            font-size: 1.4rem;
-            text-shadow: 0 0 10px rgba(245,197,66,0.5);
+        .ornament-dot {
+            width: 5px; height: 5px;
+            background: var(--sand);
+            border-radius: 50%;
+            display: inline-block;
         }
-        .moroccan-divider .small-dot {
-            width: 6px;
-            height: 6px;
-            background: var(--gold);
+        .ornament-diamond {
+            width: 7px; height: 7px;
+            background: var(--terracotta);
             transform: rotate(45deg);
+            display: inline-block;
+            opacity: 0.7;
         }
 
-        /* ===== סקשן טלפונים ===== */
-        .phone-section {
-            background:
-                radial-gradient(circle at top, rgba(245,197,66,0.12) 0%, transparent 70%),
-                rgba(0,0,0,0.25);
-            padding: 28px 22px;
-            border-radius: 22px;
-            border: 2px solid var(--gold);
-            outline: 1px dashed var(--gold);
-            outline-offset: -8px;
-            width: 100%;
-            max-width: 600px;
-            box-sizing: border-box;
-            position: relative;
-            z-index: 2;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        .subtitle {
+            font-size: 1.05rem;
+            color: var(--ink-soft);
+            line-height: 1.65;
+            font-weight: 300;
+            margin-top: 4px;
         }
-        .phone-section::before,
-        .phone-section::after {
-            content: '✦';
-            position: absolute;
-            top: -12px;
-            color: var(--gold);
-            background: var(--bordeaux);
-            width: 24px;
-            height: 24px;
+
+        /* ══════════════════════════════════════
+           כרטיסי ניווט
+        ══════════════════════════════════════ */
+        .nav-section {
+            max-width: 520px;
+            width: 100%;
+            margin-top: 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .section-label {
+            font-size: 0.68rem;
+            letter-spacing: 4px;
+            color: var(--green);
+            font-weight: 500;
+            text-transform: uppercase;
+            text-align: center;
+            margin-bottom: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            border: 2px solid var(--gold);
-            font-size: 0.85rem;
+            gap: 10px;
         }
-        .phone-section::before { right: 20px; }
-        .phone-section::after { left: 20px; }
+        .section-label::before, .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
 
-        .phone-header {
-            color: var(--gold);
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 18px;
-            font-family: 'Suez One', serif;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+        .nav-card {
+            background: var(--paper);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 22px 20px;
+            text-decoration: none;
+            color: var(--ink);
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            transition: all 0.28s ease;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(44, 32, 24, 0.06);
+            overflow: hidden;
         }
-        .phone-header .deco {
-            color: var(--gold-light);
-            margin: 0 8px;
-            font-size: 0.9em;
+        /* גבול צבעוני שמאלי */
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 3px; height: 100%;
+            background: var(--green);
+            transition: width 0.28s ease;
+        }
+        .nav-card.parking::before { background: var(--terracotta); }
+
+        .nav-card:hover {
+            background: var(--cream-deep);
+            border-color: var(--sand);
+            box-shadow: 0 6px 24px rgba(44, 32, 24, 0.12);
+            transform: translateY(-2px);
+        }
+        .nav-card:hover::before { width: 5px; }
+        .nav-card:active { transform: scale(0.98); }
+
+        /* תג שלב */
+        .step-pill {
+            position: absolute;
+            top: 10px;
+            left: 12px;
+            background: var(--green-pale);
+            color: var(--green);
+            font-size: 0.62rem;
+            letter-spacing: 2px;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 3px 9px;
+            border-radius: 20px;
+            font-family: 'Assistant', sans-serif;
+        }
+        .nav-card.parking .step-pill {
+            background: #f0ddd6;
+            color: var(--terracotta);
+        }
+
+        .icon-wrap {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: var(--cream);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            flex-shrink: 0;
+            transition: border-color 0.28s;
+        }
+        .nav-card:hover .icon-wrap { border-color: var(--sand); }
+
+        .card-text {
+            flex-grow: 1;
+            text-align: right;
+        }
+        .card-title {
+            font-family: 'Frank Ruhl Libre', serif;
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--ink);
+            line-height: 1.2;
+            margin-bottom: 5px;
+        }
+        .card-desc {
+            font-size: 0.88rem;
+            color: var(--ink-muted);
+            line-height: 1.5;
+            font-weight: 300;
+        }
+
+        .arrow-wrap {
+            flex-shrink: 0;
+            color: var(--ink-muted);
+            font-size: 1rem;
+            transition: transform 0.28s, color 0.28s;
+        }
+        .nav-card:hover .arrow-wrap {
+            transform: translateX(-4px);
+            color: var(--green);
+        }
+        .nav-card.parking:hover .arrow-wrap { color: var(--terracotta); }
+
+        /* ══════════════════════════════════════
+           קישוט בוטני מפריד
+        ══════════════════════════════════════ */
+        .botanical-divider {
+            max-width: 320px;
+            width: 100%;
+            margin: 30px 0;
+            opacity: 0.45;
+        }
+
+        /* ══════════════════════════════════════
+           אזור טלפונים
+        ══════════════════════════════════════ */
+        .phone-section {
+            max-width: 520px;
+            width: 100%;
         }
 
         .phone-grid {
             display: flex;
-            justify-content: center;
             gap: 12px;
+            margin-top: 14px;
         }
         .phone-link {
-            color: #fff;
-            text-decoration: none;
-            background: linear-gradient(135deg, var(--bordeaux) 0%, #4a0d0d 100%);
-            padding: 14px 18px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border: 2px solid var(--gold);
-            transition: all 0.3s;
             flex: 1;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.05rem;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-        .phone-link span { font-size: 1.3rem; }
-        .phone-link:hover {
-            background: var(--gold);
-            color: var(--bordeaux);
-            transform: translateY(-2px);
-        }
-
-        /* ===== עיטורי פינות (מנדלות חינה) ===== */
-        .corner {
-            position: fixed;
-            width: 140px;
-            height: 140px;
-            opacity: 0.18;
-            z-index: 1;
-            background-image: url('https://w7.pngwing.com/pngs/92/728/png-transparent-henna-pattern-mandala-tattoo-pattern-symmetric-henna-tattoo-symmetry.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            pointer-events: none;
-        }
-        .top-right { top: -15px; right: -15px; }
-        .top-left { top: -15px; left: -15px; transform: scaleX(-1); }
-        .bottom-left { bottom: -15px; left: -15px; transform: rotate(180deg); }
-        .bottom-right { bottom: -15px; right: -15px; transform: rotate(180deg) scaleX(-1); }
-
-        /* ===== כפתור פתיחת פופאפ ===== */
-        .info-btn {
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-deep) 100%);
-            color: var(--bordeaux);
-            border: 2.5px solid var(--bordeaux);
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-family: 'Heebo', sans-serif;
-            font-weight: 900;
-            font-size: 1.1rem;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-        }
-        .info-btn:hover { background: #fff; transform: translateY(-2px); }
-        .info-btn:active { transform: scale(0.97); }
-
-        /* ===== פופאפ ===== */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.75);
-            z-index: 100;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            backdrop-filter: blur(4px);
-        }
-        .modal-overlay.active { display: flex; }
-
-        .modal-box {
-            background: var(--cream);
-            border-radius: 22px;
-            padding: 45px 25px 30px;
-            max-width: 500px;
-            width: 100%;
-            box-shadow:
-                0 20px 50px rgba(0,0,0,0.6),
-                inset 0 0 0 3px var(--gold),
-                inset 0 0 0 6px var(--bordeaux),
-                inset 0 0 0 8px var(--gold);
-            position: relative;
-            text-align: right;
+            background: var(--paper);
+            border: 1px solid var(--border);
+            border-radius: 3px;
+            padding: 16px 14px;
+            text-decoration: none;
             color: var(--ink);
-            max-height: 85vh;
-            overflow-y: auto;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            background: var(--bordeaux);
-            color: #fff;
-            border: 2px solid var(--gold);
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            font-size: 1.3rem;
-            font-weight: bold;
-            cursor: pointer;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.4);
-            transition: all 0.2s ease;
-            line-height: 1;
-            padding: 0;
-            z-index: 6;
+            gap: 6px;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 8px rgba(44, 32, 24, 0.05);
         }
-        .modal-close:hover {
-            background: var(--gold);
-            color: var(--bordeaux);
+        .phone-link:hover {
+            background: var(--cream-deep);
+            border-color: var(--sand);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 32, 24, 0.1);
         }
-
-        .modal-title {
-            font-family: 'Suez One', serif;
-            color: var(--bordeaux);
-            font-size: 1.6rem;
-            margin: 0 0 15px;
-            text-align: center;
-        }
-        .modal-content {
-            font-family: 'Heebo', sans-serif;
-            font-size: 1.05rem;
-            line-height: 1.7;
+        .phone-link:active { transform: scale(0.97); }
+        .phone-icon { font-size: 1.4rem; }
+        .phone-name {
+            font-family: 'Frank Ruhl Libre', serif;
+            font-size: 1.1rem;
+            font-weight: 500;
             color: var(--ink);
         }
-
-        /* ===== כיתוב תחתון מעוטר ===== */
-        .footer-note {
-            margin-top: 30px;
-            color: var(--gold-light);
-            font-size: 0.95rem;
-            opacity: 0.8;
-            position: relative;
-            z-index: 2;
-            font-style: italic;
-        }
-        .footer-note .heart {
-            color: var(--gold);
-            font-size: 1.1rem;
+        .phone-num {
+            font-size: 0.8rem;
+            color: var(--ink-muted);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            direction: ltr;
         }
 
-        /* ===== התאמה למסכים רחבים ===== */
-        @media (min-width: 600px) {
-            .nav-container {
-                flex-direction: row;
-            }
-            .nav-card {
-                flex-direction: column;
-                flex: 1;
-                padding: 50px 28px 35px;
-            }
-            .icon-circle {
-                margin-left: 0;
-                margin-bottom: 18px;
-                width: 95px;
-                height: 95px;
-                font-size: 48px;
-            }
-            .text-content { text-align: center; }
-            .nav-arrow {
-                margin-right: 0;
-                margin-top: 18px;
-            }
+        /* ══════════════════════════════════════
+           כיתוב תחתון
+        ══════════════════════════════════════ */
+        .footer {
+            margin-top: 36px;
+            color: var(--ink-muted);
+            font-size: 0.88rem;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+        .footer strong {
+            color: var(--terracotta);
+            font-weight: 500;
+        }
+
+        /* ══════════════════════════════════════
+           רספונסיב
+        ══════════════════════════════════════ */
+        @media (max-width: 400px) {
+            .main-card { padding: 30px 18px 28px; }
+            .nav-card { padding: 20px 14px; gap: 12px; }
+            .phone-grid { flex-direction: column; }
         }
     </style>
 </head>
 <body>
 
-    <div class="corner top-right"></div>
-    <div class="corner top-left"></div>
-    <div class="corner bottom-left"></div>
-    <div class="corner bottom-right"></div>
-
-    <!-- עיטור עליון - קשת מרוקאית -->
-    <div class="top-ornament">
-        <svg viewBox="0 0 380 70" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stop-color="#fff3b0"/>
-                    <stop offset="50%" stop-color="#f5c542"/>
-                    <stop offset="100%" stop-color="#d4a017"/>
-                </linearGradient>
-            </defs>
-            <!-- קווי זהב משני הצדדים -->
-            <line x1="20" y1="35" x2="120" y2="35" stroke="url(#goldGrad)" stroke-width="2"/>
-            <line x1="260" y1="35" x2="360" y2="35" stroke="url(#goldGrad)" stroke-width="2"/>
-            <!-- נקודות מעוטרות -->
-            <circle cx="60" cy="35" r="3" fill="url(#goldGrad)"/>
-            <circle cx="320" cy="35" r="3" fill="url(#goldGrad)"/>
-            <!-- קשת מרכזית עם פנינה -->
-            <path d="M 130 50 Q 190 0 250 50" fill="none" stroke="url(#goldGrad)" stroke-width="2.5"/>
-            <path d="M 138 50 Q 190 8 242 50" fill="none" stroke="url(#goldGrad)" stroke-width="1" opacity="0.6"/>
-            <!-- כוכב מרכזי -->
-            <g transform="translate(190, 30)">
-                <polygon points="0,-12 3,-3 12,-3 5,3 8,12 0,7 -8,12 -5,3 -12,-3 -3,-3" fill="url(#goldGrad)"/>
-                <circle cx="0" cy="0" r="2.5" fill="#6e1414"/>
-            </g>
-            <!-- טיפות חינה משני הצדדים -->
-            <path d="M 130 50 Q 130 56 130 60 Q 134 56 134 52" fill="url(#goldGrad)"/>
-            <path d="M 250 50 Q 250 56 250 60 Q 246 56 246 52" fill="url(#goldGrad)"/>
-        </svg>
+    <!-- רצועה עליונה -->
+    <div class="top-strip">
+        <span class="top-strip-leaf">🌿</span>
+        <span>לילה של חינה</span>
+        <span class="top-strip-leaf">🌿</span>
     </div>
 
-    <h1>
-        <span class="ululu">✦ קולולולו ✦</span>
-        נועה ועומר חוגגים חינה
-    </h1>
+    <!-- קישוט בוטני עליון -->
+    <svg class="botanical-top" viewBox="0 0 520 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- ענף שמאלי -->
+        <path d="M 10 45 Q 80 20 160 38" stroke="#5c7a5e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M 40 35 Q 50 20 65 28" stroke="#5c7a5e" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M 80 28 Q 92 14 106 22" stroke="#5c7a5e" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M 120 33 Q 130 18 144 26" stroke="#5c7a5e" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <!-- עלי שמאל -->
+        <ellipse cx="67" cy="24" rx="8" ry="4" fill="#8aad8c" opacity="0.6" transform="rotate(-30 67 24)"/>
+        <ellipse cx="108" cy="18" rx="7" ry="3.5" fill="#8aad8c" opacity="0.5" transform="rotate(-20 108 18)"/>
+        <ellipse cx="146" cy="22" rx="6" ry="3" fill="#8aad8c" opacity="0.55" transform="rotate(-10 146 22)"/>
+        <!-- מרכז -->
+        <circle cx="260" cy="38" r="4" fill="#a0624a" opacity="0.4"/>
+        <circle cx="260" cy="38" r="7" stroke="#a0624a" stroke-width="0.8" fill="none" opacity="0.3"/>
+        <circle cx="260" cy="38" r="11" stroke="#c8a882" stroke-width="0.6" fill="none" opacity="0.25"/>
+        <!-- ענף ימני (מראה) -->
+        <path d="M 510 45 Q 440 20 360 38" stroke="#5c7a5e" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M 480 35 Q 470 20 455 28" stroke="#5c7a5e" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M 440 28 Q 428 14 414 22" stroke="#5c7a5e" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <path d="M 400 33 Q 390 18 376 26" stroke="#5c7a5e" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <ellipse cx="453" cy="24" rx="8" ry="4" fill="#8aad8c" opacity="0.6" transform="rotate(30 453 24)"/>
+        <ellipse cx="412" cy="18" rx="7" ry="3.5" fill="#8aad8c" opacity="0.5" transform="rotate(20 412 18)"/>
+        <ellipse cx="374" cy="22" rx="6" ry="3" fill="#8aad8c" opacity="0.55" transform="rotate(10 374 22)"/>
+    </svg>
 
-    <div class="title-divider">
-        <span class="line"></span>
-        <span class="dot"></span>
-        <span class="star">✦</span>
-        <span class="dot"></span>
-        <span class="line"></span>
+    <!-- כרטיס כותרת ראשי -->
+    <div class="main-card">
+        <div class="event-label">ערב חינה</div>
+        <h1 class="main-title">
+            <span class="names">נועה ועומר</span>
+            חוגגים חינה
+        </h1>
+        <div class="ornament-row">
+            <span class="ornament-dot"></span>
+            <span class="ornament-diamond"></span>
+            <span class="ornament-dot"></span>
+        </div>
+        <p class="subtitle">מתרגשים שאתם באים לחגוג איתנו ✨<br>הנה כל מה שצריך לדעת</p>
     </div>
 
-    <p class="subtitle">מתרגשים שאתם באים לחגוג איתנו ✨</p>
-
-    <div class="hamsa-row">
-        <span class="symbol">🪔</span>
-        <span class="symbol">🌙</span>
-        <span class="symbol">✋</span>
-        <span class="symbol">🌙</span>
-        <span class="symbol">🪔</span>
-    </div>
-
-    <button class="info-btn" style="display:none;" onclick="document.getElementById('infoModal').classList.add('active')">
-        ℹ️ מידע חשוב לאורחים
-    </button>
-
-    <div class="nav-container">
+    <!-- כרטיסי ניווט -->
+    <div class="nav-section">
+        <div class="section-label">ניווט לאירוע</div>
 
         <a href="https://ul.waze.com/ul?place=ChIJ2fqjE76uHRURypoZ-C-lfZ4&ll=32.66185960%2C35.10944690&navigate=yes" class="nav-card home">
-            <div class="step-badge">שלב 1</div>
-            <div class="icon-circle">🏡</div>
-            <div class="text-content">
-                <div class="card-title">לבית - הורדת האורחים</div>
+            <div class="step-pill">שלב 1</div>
+            <div class="icon-wrap">🏡</div>
+            <div class="card-text">
+                <div class="card-title">לבית — הורדת האורחים</div>
                 <div class="card-desc">הגעה ישירה למיקום החגיגה להורדת האורחים</div>
             </div>
-            <div class="nav-arrow" aria-label="ניווט">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/>
-                </svg>
-            </div>
+            <div class="arrow-wrap">←</div>
         </a>
 
         <a href="https://ul.waze.com/ul?place=ChIJX4aHeMCuHRURICdFWKisaPE&ll=32.66259150%2C35.10484200&navigate=yes" class="nav-card parking">
-            <div class="step-badge">שלב 2</div>
-            <div class="icon-circle">🅿️</div>
-            <div class="text-content">
+            <div class="step-pill">שלב 2</div>
+            <div class="icon-wrap">🅿️</div>
+            <div class="card-text">
                 <div class="card-title">לחניה</div>
-                <div class="card-desc">חניון סמוך למקום האירוע - שם יחכו לכם הסעות לאירוע</div>
+                <div class="card-desc">חניון סמוך — שם יחכו לכם הסעות לאירוע</div>
             </div>
-            <div class="nav-arrow" aria-label="ניווט">
-                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L4.5 20.29l.71.71L12 18l6.79 3 .71-.71z"/>
-                </svg>
-            </div>
+            <div class="arrow-wrap">←</div>
         </a>
-
     </div>
 
-    <!-- מפריד מרוקאי -->
-    <div class="moroccan-divider">
-        <span class="line"></span>
-        <span class="center">
-            <span class="small-dot"></span>
-            ✦
-            <span class="small-dot"></span>
-        </span>
-        <span class="line"></span>
-    </div>
+    <!-- קישוט בוטני מפריד -->
+    <svg class="botanical-divider" viewBox="0 0 320 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="0" y1="18" x2="110" y2="18" stroke="#d8ccbc" stroke-width="1"/>
+        <line x1="210" y1="18" x2="320" y2="18" stroke="#d8ccbc" stroke-width="1"/>
+        <path d="M 110 18 Q 140 4 160 18 Q 180 32 210 18" stroke="#8aad8c" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+        <circle cx="160" cy="18" r="3" fill="#a0624a" opacity="0.5"/>
+        <!-- עלים קטנים -->
+        <ellipse cx="135" cy="10" rx="6" ry="3" fill="#8aad8c" opacity="0.45" transform="rotate(-20 135 10)"/>
+        <ellipse cx="185" cy="10" rx="6" ry="3" fill="#8aad8c" opacity="0.45" transform="rotate(20 185 10)"/>
+    </svg>
 
-    <!-- פופאפ מידע - אפשר לערוך את הטקסט בתוך .modal-content -->
-    <div class="modal-overlay" id="infoModal" onclick="if(event.target===this)this.classList.remove('active')">
-        <div class="modal-box">
-            <button class="modal-close" onclick="document.getElementById('infoModal').classList.remove('active')" aria-label="סגור">✕</button>
-            <h2 class="modal-title">מידע חשוב 🌟</h2>
-            <div class="modal-content">
-                <p>כאן אפשר לכתוב את כל המידע שתרצו להעביר לאורחים.</p>
-                <p>למשל: קוד לבוש, שעת התחלה, הוראות חניה מיוחדות, או כל הודעה אחרת.</p>
-                <p>פשוט ערכו את הטקסט הזה בקוד ה-HTML בתוך התגית <strong>modal-content</strong>.</p>
-            </div>
-        </div>
-    </div>
-
+    <!-- טלפונים -->
     <div class="phone-section">
-        <div class="phone-header">
-            <span class="deco">✦</span>
-            לבירורים נוספים
-            <span class="deco">✦</span>
-        </div>
+        <div class="section-label">לבירורים נוספים</div>
         <div class="phone-grid">
             <a href="tel:0526039454" class="phone-link">
-                <span>📞</span> אהרוני
+                <span class="phone-icon">📞</span>
+                <span class="phone-name">אהרוני</span>
+                <span class="phone-num">052-603-9454</span>
             </a>
             <a href="tel:0524800922" class="phone-link">
-                <span>📞</span> אהובית
+                <span class="phone-icon">📞</span>
+                <span class="phone-name">אהובית</span>
+                <span class="phone-num">052-480-0922</span>
             </a>
         </div>
     </div>
 
-    <p class="footer-note">
-        <span class="heart">✦</span> מחכים לראותכם <span class="heart">✦</span>
-    </p>
+    <p class="footer">מחכים לראותכם — <strong>ערב נפלא לפנינו</strong> 🌿</p>
 
 </body>
 </html>
