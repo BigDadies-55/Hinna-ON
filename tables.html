@@ -784,8 +784,9 @@ function onGlobalUp(){
 ═══════════════════════════════════════ */
 function onTDown(e,id){
   if(e.button!==0)return;
+  // let resize/rotate handles handle their own events
+  if(e.target.closest('.resize-handle,.rotate-handle'))return;
   e.stopPropagation();
-  /* start drag immediately */
   const t=tables.find(x=>x.id===id), p=s2c(e.clientX,e.clientY);
   dragOff={x:p.x-t.x,y:p.y-t.y}; dragId=id; didDrag=false;
   selectT(id);
@@ -799,11 +800,12 @@ function onTClick(e,id){
 
 function startRes(e,id){
   e.stopPropagation();e.preventDefault();
+  dragId=null; // ensure drag doesn't interfere
   const t=tables.find(x=>x.id===id),p=s2c(e.clientX,e.clientY);
   rsStart={dw:t.w-(p.x-t.x),dh:t.h-(p.y-t.y)};
   resizing=true;resizeId=id;
 }
-function startRot(e,id){e.stopPropagation();e.preventDefault();rotating=true;rotateId=id;}
+function startRot(e,id){e.stopPropagation();e.preventDefault();dragId=null;rotating=true;rotateId=id;}
 
 /* ═══════════════════════════════════════
    SELECTION
