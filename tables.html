@@ -225,6 +225,7 @@
       width: 3000px;
       height: 2000px;
       transform-origin: 0 0;
+      z-index: 1;
     }
 
     /* Room boundary */
@@ -374,6 +375,52 @@
       border-radius: 50%;
       margin-left: 6px;
     }
+
+    /* ───── BG PRESETS ───── */
+    .bg-presets {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      margin-bottom: 10px;
+    }
+    .bg-preset {
+      position: relative;
+      height: 52px;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      overflow: hidden;
+      transition: all 0.2s;
+      display: flex; align-items: flex-end;
+    }
+    .bg-preset:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+    .bg-preset.active { border-color: var(--gold); box-shadow: 0 0 0 1px var(--gold-deep); }
+    .bg-preset span {
+      font-size: 0.6rem; font-weight: 700;
+      color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+      padding: 3px 6px;
+      background: rgba(0,0,0,0.45);
+      width: 100%;
+      text-align: center;
+    }
+    .bg-preset-custom {
+      grid-column: span 2;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px dashed rgba(212,160,23,0.4);
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px;
+      font-size: 0.72rem;
+      color: var(--gold-light);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .bg-preset-custom:hover { background: rgba(212,160,23,0.1); }
+    #bg-opacity-row { margin-top: 6px; }
+    #bg-opacity-row input[type=range] {
+      width: 100%; accent-color: var(--gold-deep);
+    }
+    #bg-file { display: none; }
 
     /* ───── CONTEXT MENU ───── */
     #ctx-menu {
@@ -623,6 +670,65 @@
       </div>
     </div>
 
+    <!-- Background section -->
+    <div class="sidebar-section">
+      <h3>🖼 רקע האולם</h3>
+      <div class="bg-presets">
+
+        <div class="bg-preset active" id="bg-0" onclick="setBg(0)" style="background:
+          repeating-linear-gradient(0deg,rgba(212,160,23,0.04) 0,rgba(212,160,23,0.04) 1px,transparent 1px,transparent 40px),
+          repeating-linear-gradient(90deg,rgba(212,160,23,0.04) 0,rgba(212,160,23,0.04) 1px,transparent 1px,transparent 40px),
+          radial-gradient(ellipse at 50% 50%,#2a0e0e 0%,#0d0404 100%)">
+          <span>🖤 קלאסי כהה</span>
+        </div>
+
+        <div class="bg-preset" id="bg-1" onclick="setBg(1)" style="background:
+          radial-gradient(ellipse at 30% 20%,#1a2a1a,#0a150a),
+          repeating-linear-gradient(45deg,rgba(31,111,84,0.05) 0,rgba(31,111,84,0.05) 1px,transparent 1px,transparent 30px)">
+          <span>🌿 ירוק אמרלד</span>
+        </div>
+
+        <div class="bg-preset" id="bg-2" onclick="setBg(2)" style="background:
+          radial-gradient(ellipse at 60% 40%,#1a1205,#0a0800),
+          repeating-linear-gradient(0deg,rgba(212,160,23,0.07) 0,rgba(212,160,23,0.07) 1px,transparent 1px,transparent 35px),
+          repeating-linear-gradient(90deg,rgba(212,160,23,0.07) 0,rgba(212,160,23,0.07) 1px,transparent 1px,transparent 35px)">
+          <span>✨ זהב יוקרתי</span>
+        </div>
+
+        <div class="bg-preset" id="bg-3" onclick="setBg(3)" style="background:
+          radial-gradient(ellipse at 50% 50%,#0a0a20,#050510),
+          repeating-linear-gradient(60deg,rgba(100,80,220,0.06) 0,rgba(100,80,220,0.06) 1px,transparent 1px,transparent 28px)">
+          <span>💜 סגול מלכותי</span>
+        </div>
+
+        <div class="bg-preset" id="bg-4" onclick="setBg(4)" style="background:
+          radial-gradient(ellipse at 40% 60%,#1a0a05,#0a0502),
+          repeating-linear-gradient(30deg,rgba(180,80,20,0.08) 0,rgba(180,80,20,0.08) 1px,transparent 1px,transparent 32px)">
+          <span>🍷 בורדו אדום</span>
+        </div>
+
+        <div class="bg-preset" id="bg-5" onclick="setBg(5)" style="background:
+          linear-gradient(135deg,#f5f0e8 0%,#e8dcc8 50%,#f0e8d8 100%),
+          repeating-linear-gradient(0deg,rgba(180,140,80,0.08) 0,rgba(180,140,80,0.08) 1px,transparent 1px,transparent 30px),
+          repeating-linear-gradient(90deg,rgba(180,140,80,0.08) 0,rgba(180,140,80,0.08) 1px,transparent 1px,transparent 30px)">
+          <span style="color:#3a2a0a;text-shadow:none">🤍 שמנת בהיר</span>
+        </div>
+
+      </div>
+
+      <label class="bg-preset-custom" onclick="document.getElementById('bg-file').click()">
+        📁 העלה תמונת רקע
+      </label>
+      <input type="file" id="bg-file" accept="image/*" onchange="loadBgImage(event)">
+
+      <div id="bg-opacity-row" class="prop-row" style="margin-top:8px;flex-direction:column;align-items:flex-start;gap:4px">
+        <label style="width:auto">שקיפות רקע: <span id="bg-opacity-val">100</span>%</label>
+        <input type="range" min="10" max="100" value="100" oninput="setBgOpacity(this.value)">
+      </div>
+
+      <button class="tb-btn danger" style="font-size:0.68rem;padding:3px 10px;margin-top:6px" onclick="clearBg()">✕ הסר תמונה</button>
+    </div>
+
     <!-- Room settings -->
     <div class="sidebar-section">
       <h3>🏛 הגדרות אולם</h3>
@@ -652,6 +758,8 @@
     onmouseup="onCanvasMouseUp(event)"
     oncontextmenu="return false"
   >
+    <!-- background image layer – inside canvas-wrap, behind canvas -->
+    <div id="bg-layer" style="position:absolute;inset:0;z-index:0;pointer-events:none;background-size:cover;background-position:center;opacity:1;transition:opacity 0.4s"></div>
     <div id="canvas">
       <!-- Room boundary -->
       <div id="room-boundary"></div>
@@ -1269,6 +1377,89 @@ function autoArrange() {
   });
   toast('שולחנות סודרו אוטומטית!');
   saveState();
+}
+
+// ═══════════════════════════════════════════════════════
+//  BACKGROUND
+// ═══════════════════════════════════════════════════════
+const BG_PRESETS = [
+  // 0 Classic dark (default – matches canvas-wrap CSS)
+  {
+    canvasWrap: `repeating-linear-gradient(0deg,rgba(212,160,23,0.04) 0px,rgba(212,160,23,0.04) 1px,transparent 1px,transparent 40px),repeating-linear-gradient(90deg,rgba(212,160,23,0.04) 0px,rgba(212,160,23,0.04) 1px,transparent 1px,transparent 40px),radial-gradient(ellipse at 50% 50%,#2a0e0e 0%,#0d0404 100%)`,
+    body: '#1a0a0a', layer: ''
+  },
+  // 1 Emerald
+  {
+    canvasWrap: `repeating-linear-gradient(45deg,rgba(31,111,84,0.06) 0px,rgba(31,111,84,0.06) 1px,transparent 1px,transparent 30px),radial-gradient(ellipse at 30% 20%,#1a2a1a,#0a150a)`,
+    body: '#0a150a', layer: ''
+  },
+  // 2 Luxury Gold
+  {
+    canvasWrap: `repeating-linear-gradient(0deg,rgba(212,160,23,0.09) 0px,rgba(212,160,23,0.09) 1px,transparent 1px,transparent 35px),repeating-linear-gradient(90deg,rgba(212,160,23,0.09) 0px,rgba(212,160,23,0.09) 1px,transparent 1px,transparent 35px),radial-gradient(ellipse at 60% 40%,#1a1205,#0a0800)`,
+    body: '#0a0800', layer: ''
+  },
+  // 3 Royal Purple
+  {
+    canvasWrap: `repeating-linear-gradient(60deg,rgba(100,80,220,0.08) 0px,rgba(100,80,220,0.08) 1px,transparent 1px,transparent 28px),radial-gradient(ellipse at 50% 50%,#0a0a20,#050510)`,
+    body: '#050510', layer: ''
+  },
+  // 4 Bordeaux Red
+  {
+    canvasWrap: `repeating-linear-gradient(30deg,rgba(180,80,20,0.09) 0px,rgba(180,80,20,0.09) 1px,transparent 1px,transparent 32px),radial-gradient(ellipse at 40% 60%,#1a0a05,#0a0502)`,
+    body: '#0a0502', layer: ''
+  },
+  // 5 Cream Light
+  {
+    canvasWrap: `repeating-linear-gradient(0deg,rgba(180,140,80,0.1) 0px,rgba(180,140,80,0.1) 1px,transparent 1px,transparent 30px),repeating-linear-gradient(90deg,rgba(180,140,80,0.1) 0px,rgba(180,140,80,0.1) 1px,transparent 1px,transparent 30px),linear-gradient(135deg,#f5f0e8 0%,#e8dcc8 50%,#f0e8d8 100%)`,
+    body: '#f5f0e8', layer: ''
+  },
+];
+
+let activeBg = 0;
+
+function setBg(idx) {
+  activeBg = idx;
+  // Mark active
+  document.querySelectorAll('.bg-preset').forEach((el,i)=>el.classList.toggle('active',i===idx));
+  const preset = BG_PRESETS[idx];
+  document.getElementById('canvas-wrap').style.background = preset.canvasWrap;
+  document.body.style.background = preset.body;
+  // Clear any uploaded image
+  const layer = document.getElementById('bg-layer');
+  layer.style.backgroundImage = 'none';
+  layer.style.opacity = 1;
+  toast(['🖤 קלאסי כהה','🌿 ירוק אמרלד','✨ זהב יוקרתי','💜 סגול מלכותי','🍷 בורדו אדום','🤍 שמנת בהיר'][idx]);
+}
+
+function loadBgImage(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const layer = document.getElementById('bg-layer');
+    layer.style.backgroundImage = `url('${ev.target.result}')`;
+    layer.style.backgroundSize = 'cover';
+    layer.style.backgroundPosition = 'center';
+    // Dim the canvas-wrap gradient so image shows through
+    document.getElementById('canvas-wrap').style.background = 'transparent';
+    // Deselect preset buttons
+    document.querySelectorAll('.bg-preset').forEach(el=>el.classList.remove('active'));
+    toast('תמונת רקע הועלתה!');
+  };
+  reader.readAsDataURL(file);
+  e.target.value = '';
+}
+
+function setBgOpacity(val) {
+  document.getElementById('bg-opacity-val').textContent = val;
+  document.getElementById('bg-layer').style.opacity = val/100;
+}
+
+function clearBg() {
+  const layer = document.getElementById('bg-layer');
+  layer.style.backgroundImage = 'none';
+  setBg(activeBg);
+  toast('תמונת רקע הוסרה');
 }
 
 // ═══════════════════════════════════════════════════════
