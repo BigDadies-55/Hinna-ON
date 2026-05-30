@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>חינה של נועה ועומר – פריסת שולחנות</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Suez+One&family=Heebo:wght@400;600;700;900&family=Frank+Ruhl+Libre:wght@500;700;900&display=swap');
+
+    :root {
+      --bordeaux: #6e1414;
+      --bordeaux-light: #8b1a1a;
+      --gold: #f5c542;
+      --gold-deep: #d4a017;
+      --gold-light: #fff3b0;
+      --emerald: #1f6f54;
+      --teal: #0a4a4a;
+      --cream: #fdf6e3;
+      --ink: #2b1a0e;
+      --sidebar-w: 280px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: #1a0a0a;
+      color: var(--cream);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* ───── TOP BAR ───── */
+    #topbar {
+      background: linear-gradient(90deg, var(--bordeaux) 0%, #3d0a0a 50%, var(--bordeaux) 100%);
+      border-bottom: 2px solid var(--gold-deep);
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-shrink: 0;
+      z-index: 200;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    #topbar h1 {
+      font-family: 'Suez One', serif;
+      font-size: 1.3rem;
+      color: var(--gold);
+      text-shadow: 0 0 12px rgba(245,197,66,0.4);
+      flex: 1;
+    }
+
+    .tb-btn {
+      background: rgba(245,197,66,0.12);
+      border: 1px solid var(--gold-deep);
+      color: var(--gold-light);
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Heebo', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 600;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+    .tb-btn:hover { background: rgba(245,197,66,0.28); transform: translateY(-1px); }
+    .tb-btn.active { background: var(--gold-deep); color: var(--ink); }
+    .tb-btn.danger { border-color: #e55; color: #f99; }
+    .tb-btn.danger:hover { background: rgba(200,50,50,0.3); }
+
+    #zoom-display {
+      font-size: 0.78rem;
+      color: var(--gold-deep);
+      min-width: 40px;
+      text-align: center;
+    }
+
+    /* ───── MAIN LAYOUT ───── */
+    #workspace {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ───── SIDEBAR ───── */
+    #sidebar {
+      width: var(--sidebar-w);
+      background: linear-gradient(180deg, #2a0a0a 0%, #1a0505 100%);
+      border-left: 2px solid var(--gold-deep);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    #sidebar::-webkit-scrollbar { width: 4px; }
+    #sidebar::-webkit-scrollbar-track { background: transparent; }
+    #sidebar::-webkit-scrollbar-thumb { background: var(--gold-deep); border-radius: 4px; }
+
+    .sidebar-section {
+      padding: 14px 12px 10px;
+      border-bottom: 1px solid rgba(212,160,23,0.2);
+    }
+
+    .sidebar-section h3 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--gold-deep);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    /* Shape palette */
+    .shape-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+
+    .shape-item {
+      background: rgba(245,197,66,0.07);
+      border: 1px solid rgba(212,160,23,0.3);
+      border-radius: 8px;
+      padding: 8px 4px;
+      cursor: grab;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      font-size: 0.7rem;
+      color: var(--gold-light);
+      transition: all 0.18s;
+    }
+    .shape-item:hover { background: rgba(245,197,66,0.18); border-color: var(--gold); transform: translateY(-2px); }
+    .shape-item:active { cursor: grabbing; }
+
+    .shape-icon { font-size: 1.6rem; line-height: 1; }
+
+    /* Props panel */
+    #props-panel { display: none; }
+    #props-panel.visible { display: block; }
+
+    .prop-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .prop-row label {
+      font-size: 0.72rem;
+      color: var(--gold-deep);
+      width: 70px;
+      flex-shrink: 0;
+    }
+    .prop-row input[type=text],
+    .prop-row input[type=number],
+    .prop-row select {
+      flex: 1;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(212,160,23,0.35);
+      border-radius: 6px;
+      color: var(--cream);
+      padding: 4px 8px;
+      font-size: 0.75rem;
+      font-family: 'Heebo', sans-serif;
+      outline: none;
+    }
+    .prop-row input:focus, .prop-row select:focus { border-color: var(--gold); }
+    .prop-row input[type=color] { width: 36px; height: 26px; padding: 2px; border-radius: 4px; cursor: pointer; border: 1px solid rgba(212,160,23,0.35); background: none; }
+
+    .status-dot {
+      width: 12px; height: 12px; border-radius: 50%; cursor: pointer; border: 2px solid transparent; flex-shrink: 0;
+    }
+    .status-dot.active { border-color: white; }
+
+    .seats-row {
+      display: flex; gap: 5px; flex-wrap: wrap;
+    }
+    .seat-badge {
+      background: rgba(212,160,23,0.15);
+      border: 1px solid var(--gold-deep);
+      border-radius: 50%;
+      width: 26px; height: 26px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.65rem;
+      color: var(--gold);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .seat-badge.filled { background: var(--gold-deep); color: var(--ink); font-weight: 700; }
+    .seat-badge:hover { background: rgba(212,160,23,0.35); }
+
+    #stats-box {
+      padding: 10px 12px;
+      font-size: 0.72rem;
+      color: var(--gold-light);
+      line-height: 1.7;
+    }
+    #stats-box span { color: var(--gold); font-weight: 700; }
+
+    /* ───── CANVAS AREA ───── */
+    #canvas-wrap {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+      background:
+        repeating-linear-gradient(0deg, rgba(212,160,23,0.04) 0px, rgba(212,160,23,0.04) 1px, transparent 1px, transparent 40px),
+        repeating-linear-gradient(90deg, rgba(212,160,23,0.04) 0px, rgba(212,160,23,0.04) 1px, transparent 1px, transparent 40px),
+        radial-gradient(ellipse at 50% 50%, #2a0e0e 0%, #0d0404 100%);
+      cursor: default;
+    }
+
+    #canvas-wrap.panning { cursor: grabbing; }
+
+    #canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 3000px;
+      height: 2000px;
+      transform-origin: 0 0;
+    }
+
+    /* Room boundary */
+    #room-boundary {
+      position: absolute;
+      border: 2px dashed rgba(212,160,23,0.35);
+      border-radius: 4px;
+      pointer-events: none;
+    }
+
+    /* Stage / zones */
+    .zone {
+      position: absolute;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      pointer-events: none;
+      opacity: 0.55;
+    }
+
+    /* ───── TABLE ELEMENT ───── */
+    .table-el {
+      position: absolute;
+      cursor: grab;
+      transition: box-shadow 0.15s, filter 0.15s;
+      z-index: 10;
+    }
+    .table-el:active { cursor: grabbing; }
+    .table-el.selected .table-body { box-shadow: 0 0 0 3px var(--gold), 0 0 20px rgba(245,197,66,0.4) !important; }
+
+    .table-body {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 2px;
+      transition: box-shadow 0.15s;
+    }
+
+    .table-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-align: center;
+      color: var(--cream);
+      text-shadow: 0 1px 3px rgba(0,0,0,0.7);
+      line-height: 1.2;
+      max-width: 90%;
+      word-break: break-word;
+      pointer-events: none;
+    }
+
+    .table-num {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--gold);
+      text-shadow: 0 0 8px rgba(245,197,66,0.5);
+      pointer-events: none;
+    }
+
+    .table-seats-count {
+      font-size: 0.62rem;
+      color: rgba(255,255,255,0.6);
+      pointer-events: none;
+    }
+
+    /* Seat indicators around table */
+    .seat-indicator {
+      position: absolute;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: rgba(212,160,23,0.5);
+      border: 1px solid rgba(212,160,23,0.8);
+      pointer-events: none;
+    }
+    .seat-indicator.filled {
+      background: var(--gold-deep);
+    }
+
+    /* Status colours */
+    .status-free   .table-body { background: radial-gradient(circle at 40% 35%, #2a5c2a, #0f2e0f); border: 2px solid #2e7d2e; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+    .status-reserved .table-body { background: radial-gradient(circle at 40% 35%, #5c2a00, #2e1200); border: 2px solid #c87720; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+    .status-seated .table-body { background: radial-gradient(circle at 40% 35%, #5c1414, #2e0a0a); border: 2px solid var(--bordeaux-light); box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+    .status-vip    .table-body { background: radial-gradient(circle at 40% 35%, #5c4a00, #2e2500); border: 2px solid var(--gold-deep); box-shadow: 0 4px 20px rgba(212,160,23,0.35); }
+
+    /* Shape variants */
+    .shape-rect .table-body { border-radius: 10px; }
+    .shape-round .table-body { border-radius: 50%; }
+    .shape-oval .table-body { border-radius: 50% / 40%; }
+    .shape-square .table-body { border-radius: 8px; }
+    .shape-long .table-body { border-radius: 12px; }
+    .shape-banquet .table-body { border-radius: 6px; }
+
+    /* Rotate handle */
+    .rotate-handle {
+      position: absolute;
+      top: -22px; left: 50%;
+      transform: translateX(-50%);
+      width: 18px; height: 18px;
+      background: var(--gold-deep);
+      border-radius: 50%;
+      cursor: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'><text y='16' font-size='16'>↻</text></svg>") 10 10, crosshair;
+      border: 2px solid var(--ink);
+      display: none;
+      z-index: 20;
+      font-size: 10px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--ink);
+      font-weight: 900;
+    }
+    .table-el.selected .rotate-handle { display: flex; }
+
+    /* Resize handle */
+    .resize-handle {
+      position: absolute;
+      bottom: -6px; right: -6px;
+      width: 14px; height: 14px;
+      background: var(--gold);
+      border-radius: 3px;
+      cursor: se-resize;
+      display: none;
+      z-index: 20;
+      border: 1px solid var(--ink);
+    }
+    .table-el.selected .resize-handle { display: block; }
+
+    /* ───── LEGEND ───── */
+    #legend {
+      position: absolute;
+      bottom: 12px; left: 12px;
+      background: rgba(26,5,5,0.88);
+      border: 1px solid rgba(212,160,23,0.3);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 0.7rem;
+      color: var(--gold-light);
+      line-height: 2;
+      backdrop-filter: blur(6px);
+    }
+    .legend-dot {
+      display: inline-block;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      margin-left: 6px;
+    }
+
+    /* ───── CONTEXT MENU ───── */
+    #ctx-menu {
+      position: fixed;
+      background: rgba(26,5,5,0.97);
+      border: 1px solid var(--gold-deep);
+      border-radius: 10px;
+      padding: 6px 0;
+      z-index: 9999;
+      display: none;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.7);
+      min-width: 160px;
+      backdrop-filter: blur(8px);
+    }
+    .ctx-item {
+      padding: 7px 16px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      color: var(--cream);
+      transition: background 0.12s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ctx-item:hover { background: rgba(212,160,23,0.15); }
+    .ctx-item.danger { color: #f77; }
+    .ctx-item.danger:hover { background: rgba(200,50,50,0.2); }
+    .ctx-sep { height: 1px; background: rgba(212,160,23,0.2); margin: 4px 0; }
+
+    /* ───── TOAST ───── */
+    #toast {
+      position: fixed;
+      bottom: 30px; left: 50%;
+      transform: translateX(-50%) translateY(40px);
+      background: rgba(26,5,5,0.95);
+      border: 1px solid var(--gold-deep);
+      border-radius: 20px;
+      padding: 8px 20px;
+      color: var(--gold-light);
+      font-size: 0.8rem;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ───── MINI MAP ───── */
+    #minimap {
+      position: absolute;
+      bottom: 12px; right: 12px;
+      width: 160px; height: 100px;
+      background: rgba(10,4,4,0.85);
+      border: 1px solid rgba(212,160,23,0.3);
+      border-radius: 8px;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    #minimap-canvas { width: 100%; height: 100%; }
+    #minimap-viewport {
+      position: absolute;
+      border: 1.5px solid var(--gold);
+      border-radius: 2px;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    /* ───── MODAL ───── */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 5000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: linear-gradient(135deg, #1a0505, #2a0a0a);
+      border: 1px solid var(--gold-deep);
+      border-radius: 16px;
+      padding: 24px 28px;
+      min-width: 320px;
+      max-width: 90vw;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+    }
+    .modal-box h2 { font-family: 'Suez One', serif; color: var(--gold); margin-bottom: 16px; font-size: 1.1rem; }
+    .modal-row { margin-bottom: 12px; }
+    .modal-row label { display: block; font-size: 0.75rem; color: var(--gold-deep); margin-bottom: 4px; }
+    .modal-row input, .modal-row select {
+      width: 100%; background: rgba(255,255,255,0.07); border: 1px solid rgba(212,160,23,0.35);
+      border-radius: 8px; color: var(--cream); padding: 6px 12px; font-size: 0.82rem;
+      font-family: 'Heebo', sans-serif; outline: none;
+    }
+    .modal-row input:focus, .modal-row select:focus { border-color: var(--gold); }
+    .modal-btns { display: flex; gap: 10px; justify-content: flex-end; margin-top: 16px; }
+    .btn-primary { background: var(--gold-deep); color: var(--ink); border: none; border-radius: 8px; padding: 8px 20px; cursor: pointer; font-weight: 700; font-size: 0.82rem; font-family: 'Heebo', sans-serif; }
+    .btn-cancel { background: transparent; color: var(--gold-light); border: 1px solid rgba(212,160,23,0.35); border-radius: 8px; padding: 8px 16px; cursor: pointer; font-size: 0.82rem; font-family: 'Heebo', sans-serif; }
+
+    /* Tooltip */
+    .tooltip {
+      position: absolute;
+      background: rgba(10,4,4,0.95);
+      border: 1px solid var(--gold-deep);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font-size: 0.72rem;
+      color: var(--gold-light);
+      pointer-events: none;
+      z-index: 500;
+      white-space: nowrap;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <h1>✨ חינה של נועה ועומר – פריסת שולחנות</h1>
+  <button class="tb-btn" onclick="openAddModal()">＋ הוסף שולחן</button>
+  <button class="tb-btn" id="snap-btn" onclick="toggleSnap()" title="הצמד לרשת">⊞ הצמד</button>
+  <button class="tb-btn" id="pan-btn" onclick="togglePanMode()">✋ גרירת מפה</button>
+  <button class="tb-btn" onclick="zoomIn()">＋ זום</button>
+  <span id="zoom-display">100%</span>
+  <button class="tb-btn" onclick="zoomOut()">－ זום</button>
+  <button class="tb-btn" onclick="resetView()">⌖ אפס תצוגה</button>
+  <button class="tb-btn" onclick="autoArrange()">⚡ סדר אוטומטי</button>
+  <button class="tb-btn" onclick="exportImage()">📷 ייצא תמונה</button>
+  <button class="tb-btn danger" onclick="clearAll()">🗑 נקה הכל</button>
+</div>
+
+<!-- WORKSPACE -->
+<div id="workspace">
+
+  <!-- SIDEBAR -->
+  <div id="sidebar">
+
+    <!-- Add shapes palette -->
+    <div class="sidebar-section">
+      <h3>סוגי שולחנות</h3>
+      <div class="shape-grid">
+        <div class="shape-item" draggable="true" ondragstart="paletteDragStart(event,'round',80,80,6)">
+          <div class="shape-icon">⭕</div>עגול 6
+        </div>
+        <div class="shape-item" draggable="true" ondragstart="paletteDragStart(event,'round',100,100,8)">
+          <div class="shape-icon">🔵</div>עגול 8
+        </div>
+        <div class="shape-item" draggable="true" ondragstart="paletteDragStart(event,'rect',140,80,8)">
+          <div class="shape-icon">▬</div>מלבן 8
+        </div>
+        <div class="shape-item" draggable="true" ondragstart="paletteDragStart(event,'rect',180,80,10)">
+          <div class="shape-icon">⬛</div>מלבן 10
+        </div>
+        <div class="shape-item" draggable="true" ondragstart="paletteDragStart(event,'square',90,90,4)">
+          <div class="shape-icon">🔲</div>ריבוע 4
+        </div>
+        <div class="shape-item" draggable="true" ondragstart="paletteDragStart(event,'oval',130,85,10)">
+          <div class="shape-icon">🥚</div>אובאלי 10
+        </div>
+        <div class="shape-item" draggable="true" ondragstart="paletteDragStart(event,'long',220,70,12)">
+          <div class="shape-icon">📏</div>ארוך 12
+        </div>
+        <div class="shape-item" draggable="true" ondragstart="paletteDragStart(event,'banquet',280,75,16)">
+          <div class="shape-icon">🎉</div>בנקט 16
+        </div>
+      </div>
+    </div>
+
+    <!-- Selected table properties -->
+    <div class="sidebar-section" id="props-panel">
+      <h3>✏️ עריכת שולחן</h3>
+
+      <div class="prop-row">
+        <label>שם</label>
+        <input type="text" id="p-name" oninput="updateSelectedProp('name',this.value)" placeholder="שם שולחן">
+      </div>
+
+      <div class="prop-row">
+        <label>מספר</label>
+        <input type="number" id="p-num" min="1" oninput="updateSelectedProp('num',this.value)">
+      </div>
+
+      <div class="prop-row">
+        <label>כסאות</label>
+        <input type="number" id="p-seats" min="1" max="30" oninput="updateSelectedProp('seats',parseInt(this.value))">
+      </div>
+
+      <div class="prop-row">
+        <label>סטטוס</label>
+        <select id="p-status" onchange="updateSelectedProp('status',this.value)">
+          <option value="free">פנוי</option>
+          <option value="reserved">שמור</option>
+          <option value="seated">מאויש</option>
+          <option value="vip">VIP</option>
+        </select>
+      </div>
+
+      <div class="prop-row">
+        <label>צבע רקע</label>
+        <input type="color" id="p-color" oninput="updateSelectedProp('customColor',this.value)">
+        <button class="tb-btn" style="padding:3px 8px;font-size:0.65rem" onclick="updateSelectedProp('customColor','')">איפוס</button>
+      </div>
+
+      <div class="prop-row">
+        <label>רוחב</label>
+        <input type="number" id="p-w" min="50" max="500" oninput="updateSelectedProp('w',parseInt(this.value))">
+      </div>
+
+      <div class="prop-row">
+        <label>גובה</label>
+        <input type="number" id="p-h" min="50" max="500" oninput="updateSelectedProp('h',parseInt(this.value))">
+      </div>
+
+      <div class="prop-row">
+        <label>סיבוב</label>
+        <input type="number" id="p-rot" min="-180" max="180" oninput="updateSelectedProp('rot',parseInt(this.value)||0)">°
+      </div>
+
+      <div style="margin-top:4px">
+        <div class="prop-row"><label>קבוצה</label>
+          <input type="text" id="p-group" oninput="updateSelectedProp('group',this.value)" placeholder="למשל: משפחה">
+        </div>
+      </div>
+
+      <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap">
+        <button class="tb-btn" style="font-size:0.7rem;padding:4px 10px" onclick="duplicateSelected()">⎘ שכפל</button>
+        <button class="tb-btn danger" style="font-size:0.7rem;padding:4px 10px" onclick="deleteSelected()">🗑 מחק</button>
+        <button class="tb-btn" style="font-size:0.7rem;padding:4px 10px" onclick="bringFront()">⬆ קדמה</button>
+        <button class="tb-btn" style="font-size:0.7rem;padding:4px 10px" onclick="sendBack()">⬇ אחורה</button>
+      </div>
+    </div>
+
+    <!-- Statistics -->
+    <div class="sidebar-section">
+      <h3>📊 סטטיסטיקות</h3>
+      <div id="stats-box">טוען...</div>
+    </div>
+
+    <!-- Legend -->
+    <div class="sidebar-section">
+      <h3>🎨 מקרא</h3>
+      <div style="font-size:0.72rem; line-height:2; color:var(--gold-light)">
+        <span class="legend-dot" style="background:#2e7d2e"></span> פנוי<br>
+        <span class="legend-dot" style="background:#c87720"></span> שמור<br>
+        <span class="legend-dot" style="background:var(--bordeaux-light)"></span> מאויש<br>
+        <span class="legend-dot" style="background:var(--gold-deep)"></span> VIP
+      </div>
+    </div>
+
+    <!-- Room settings -->
+    <div class="sidebar-section">
+      <h3>🏛 הגדרות אולם</h3>
+      <div class="prop-row">
+        <label>רוחב אולם</label>
+        <input type="number" id="room-w" value="1600" min="500" max="2800" oninput="updateRoom()">
+      </div>
+      <div class="prop-row">
+        <label>גובה אולם</label>
+        <input type="number" id="room-h" value="1000" min="400" max="1800" oninput="updateRoom()">
+      </div>
+      <div class="prop-row">
+        <label>רשת</label>
+        <input type="number" id="grid-size" value="20" min="10" max="80" oninput="updateGridSize()">px
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CANVAS AREA -->
+  <div id="canvas-wrap"
+    onwheel="onWheel(event)"
+    ondragover="onCanvasDragOver(event)"
+    ondrop="onCanvasDrop(event)"
+    onmousedown="onCanvasMouseDown(event)"
+    onmousemove="onCanvasMouseMove(event)"
+    onmouseup="onCanvasMouseUp(event)"
+    oncontextmenu="return false"
+  >
+    <div id="canvas">
+      <!-- Room boundary -->
+      <div id="room-boundary"></div>
+
+      <!-- Fixed zones -->
+      <div class="zone" id="stage-zone" style="left:650px;top:20px;width:300px;height:70px;background:rgba(110,20,20,0.4);border:2px dashed rgba(212,160,23,0.5);color:var(--gold);font-family:'Suez One',serif;">
+        🎶 במה / DJ
+      </div>
+      <div class="zone" id="entrance-zone" style="left:40px;top:440px;width:120px;height:60px;background:rgba(31,111,84,0.3);border:2px dashed rgba(31,111,84,0.7);color:#5dba8a;font-size:0.75rem;">
+        🚪 כניסה
+      </div>
+      <div class="zone" id="bar-zone" style="left:1430px;top:40px;width:130px;height:160px;background:rgba(80,40,0,0.35);border:2px dashed rgba(200,119,32,0.6);color:#c87720;font-size:0.75rem;">
+        🍹 בר
+      </div>
+      <div class="zone" id="dance-zone" style="left:580px;top:450px;width:440px;height:250px;background:rgba(110,20,20,0.15);border:2px dashed rgba(245,197,66,0.2);color:rgba(245,197,66,0.4);font-size:0.9rem;">
+        💃 רחבת ריקודים
+      </div>
+
+    </div>
+
+    <!-- Minimap -->
+    <div id="minimap">
+      <canvas id="minimap-canvas"></canvas>
+      <div id="minimap-viewport"></div>
+    </div>
+
+    <!-- Tooltip -->
+    <div class="tooltip" id="tooltip"></div>
+  </div>
+
+</div>
+
+<!-- CONTEXT MENU -->
+<div id="ctx-menu">
+  <div class="ctx-item" onclick="ctxAction('status','free')">🟢 פנוי</div>
+  <div class="ctx-item" onclick="ctxAction('status','reserved')">🟠 שמור</div>
+  <div class="ctx-item" onclick="ctxAction('status','seated')">🔴 מאויש</div>
+  <div class="ctx-item" onclick="ctxAction('status','vip')">⭐ VIP</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item" onclick="ctxAction('duplicate')">⎘ שכפל</div>
+  <div class="ctx-item" onclick="ctxAction('edit')">✏️ ערוך</div>
+  <div class="ctx-item" onclick="ctxAction('front')">⬆ הבא קדימה</div>
+  <div class="ctx-item" onclick="ctxAction('back')">⬇ שלח אחורה</div>
+  <div class="ctx-sep"></div>
+  <div class="ctx-item danger" onclick="ctxAction('delete')">🗑 מחק</div>
+</div>
+
+<!-- ADD TABLE MODAL -->
+<div class="modal-overlay" id="add-modal">
+  <div class="modal-box">
+    <h2>➕ הוספת שולחן</h2>
+    <div class="modal-row">
+      <label>מספר שולחן</label>
+      <input type="number" id="m-num" min="1" value="1">
+    </div>
+    <div class="modal-row">
+      <label>שם / קבוצה</label>
+      <input type="text" id="m-name" placeholder="למשל: משפחת כהן">
+    </div>
+    <div class="modal-row">
+      <label>מספר כסאות</label>
+      <input type="number" id="m-seats" min="1" max="30" value="6">
+    </div>
+    <div class="modal-row">
+      <label>צורת שולחן</label>
+      <select id="m-shape">
+        <option value="round">עגול</option>
+        <option value="rect">מלבני</option>
+        <option value="square">ריבועי</option>
+        <option value="oval">אובאלי</option>
+        <option value="long">ארוך</option>
+        <option value="banquet">בנקט (ארוך מאוד)</option>
+      </select>
+    </div>
+    <div class="modal-row">
+      <label>סטטוס</label>
+      <select id="m-status">
+        <option value="free">פנוי</option>
+        <option value="reserved">שמור</option>
+        <option value="vip">VIP</option>
+      </select>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal('add-modal')">ביטול</button>
+      <button class="btn-primary" onclick="addTableFromModal()">הוסף ✓</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════════════════════
+let tables = [];
+let nextId = 1;
+let selectedId = null;
+let ctxTargetId = null;
+
+// View transform
+let viewX = 80, viewY = 60, zoom = 1;
+let gridSize = 20;
+let snapEnabled = true;
+
+// Pan
+let panMode = false;
+let panning = false;
+let panStart = {x:0,y:0};
+
+// Drag table
+let dragging = false;
+let dragId = null;
+let dragOffset = {x:0,y:0};
+
+// Resize
+let resizing = false;
+let resizeId = null;
+let resizeStart = {};
+
+// Rotate
+let rotating = false;
+let rotateId = null;
+let rotateCenter = {};
+
+// Palette drag
+let paletteDrop = null;
+
+// Room
+let roomW = 1600, roomH = 1000;
+
+// ═══════════════════════════════════════════════════════
+//  INIT
+// ═══════════════════════════════════════════════════════
+window.addEventListener('DOMContentLoaded', () => {
+  updateRoom();
+  addDefaultTables();
+  setInterval(updateMinimap, 500);
+  document.addEventListener('keydown', onKeyDown);
+  document.addEventListener('mouseup', onGlobalMouseUp);
+  document.getElementById('canvas-wrap').addEventListener('click', onCanvasClick);
+});
+
+function addDefaultTables() {
+  // Couple table VIP
+  addTable({shape:'round', w:110, h:110, seats:2, name:'שולחן הזוג', num:1, status:'vip', x:750, y:120});
+  // Family tables
+  addTable({shape:'round', w:100, h:100, seats:8, name:'משפחת כהן', num:2, status:'reserved', x:200, y:200});
+  addTable({shape:'round', w:100, h:100, seats:8, name:'משפחת לוי', num:3, status:'reserved', x:350, y:200});
+  addTable({shape:'round', w:100, h:100, seats:8, name:'צד חתן', num:4, status:'free', x:200, y:340});
+  addTable({shape:'round', w:100, h:100, seats:8, name:'צד כלה', num:5, status:'free', x:350, y:340});
+  addTable({shape:'round', w:90, h:90, seats:6, name:'חברים', num:6, status:'free', x:520, y:200});
+  addTable({shape:'round', w:90, h:90, seats:6, name:'חברים', num:7, status:'free', x:520, y:330});
+  addTable({shape:'rect', w:160, h:80, seats:10, name:'משפחה מורחבת', num:8, status:'free', x:900, y:200});
+  addTable({shape:'rect', w:160, h:80, seats:10, name:'קולגות', num:9, status:'free', x:1100, y:200});
+  addTable({shape:'rect', w:160, h:80, seats:10, name:'שכנים', num:10, status:'free', x:900, y:330});
+  addTable({shape:'long', w:220, h:70, seats:14, name:'שולחן ארוך A', num:11, status:'free', x:850, y:720});
+  addTable({shape:'long', w:220, h:70, seats:14, name:'שולחן ארוך B', num:12, status:'free', x:1100, y:720});
+}
+
+// ═══════════════════════════════════════════════════════
+//  TABLE MANAGEMENT
+// ═══════════════════════════════════════════════════════
+const SHAPE_DEFAULTS = {
+  round:   {w:90,  h:90},
+  rect:    {w:140, h:80},
+  square:  {w:90,  h:90},
+  oval:    {w:130, h:85},
+  long:    {w:220, h:70},
+  banquet: {w:280, h:75},
+};
+
+function addTable(cfg) {
+  const shape = cfg.shape || 'round';
+  const def = SHAPE_DEFAULTS[shape];
+  const t = {
+    id: nextId++,
+    num: cfg.num || nextId-1,
+    name: cfg.name || '',
+    shape,
+    w: cfg.w || def.w,
+    h: cfg.h || def.h,
+    seats: cfg.seats || 6,
+    seatedCount: cfg.seatedCount || 0,
+    status: cfg.status || 'free',
+    x: cfg.x != null ? cfg.x : 400 + Math.random()*200,
+    y: cfg.y != null ? cfg.y : 300 + Math.random()*100,
+    rot: cfg.rot || 0,
+    zIndex: nextId,
+    customColor: cfg.customColor || '',
+    group: cfg.group || '',
+  };
+  tables.push(t);
+  renderTable(t);
+  updateStats();
+  saveState();
+  return t;
+}
+
+function renderTable(t) {
+  let el = document.getElementById('t-'+t.id);
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 't-'+t.id;
+    el.className = 'table-el';
+    el.innerHTML = `
+      <div class="rotate-handle" title="סובב">↻</div>
+      <div class="table-body">
+        <div class="table-num"></div>
+        <div class="table-label"></div>
+        <div class="table-seats-count"></div>
+      </div>
+      <div class="resize-handle" title="שנה גודל"></div>
+    `;
+    el.addEventListener('mousedown', e => onTableMouseDown(e, t.id));
+    el.addEventListener('contextmenu', e => showCtxMenu(e, t.id));
+    el.addEventListener('mouseenter', e => showTooltip(e, t.id));
+    el.addEventListener('mouseleave', hideTooltip);
+    el.querySelector('.rotate-handle').addEventListener('mousedown', e => startRotate(e, t.id));
+    el.querySelector('.resize-handle').addEventListener('mousedown', e => startResize(e, t.id));
+    document.getElementById('canvas').appendChild(el);
+  }
+
+  // Apply
+  el.style.left = t.x + 'px';
+  el.style.top  = t.y + 'px';
+  el.style.width  = t.w + 'px';
+  el.style.height = t.h + 'px';
+  el.style.zIndex = t.zIndex;
+
+  const body = el.querySelector('.table-body');
+  body.style.width  = t.w + 'px';
+  body.style.height = t.h + 'px';
+  body.style.transform = `rotate(${t.rot}deg)`;
+
+  if (t.customColor) {
+    body.style.background = t.customColor;
+    body.style.border = '2px solid ' + t.customColor;
+  } else {
+    body.style.background = '';
+    body.style.border = '';
+  }
+
+  el.className = `table-el shape-${t.shape} status-${t.status}`;
+  if (selectedId === t.id) el.classList.add('selected');
+
+  el.querySelector('.table-num').textContent = t.num;
+  el.querySelector('.table-label').textContent = t.name;
+  el.querySelector('.table-seats-count').textContent = `${t.seatedCount}/${t.seats} 🪑`;
+
+  // Seat dots around table
+  body.querySelectorAll('.seat-indicator').forEach(s=>s.remove());
+  drawSeatDots(body, t);
+}
+
+function drawSeatDots(body, t) {
+  const cx = t.w/2, cy = t.h/2;
+  const rx = t.w/2 + 10, ry = t.h/2 + 10;
+  for (let i = 0; i < Math.min(t.seats, 20); i++) {
+    const angle = (2*Math.PI*i/Math.min(t.seats,20)) - Math.PI/2;
+    const sx = cx + rx * Math.cos(angle);
+    const sy = cy + ry * Math.sin(angle);
+    const dot = document.createElement('div');
+    dot.className = 'seat-indicator' + (i < t.seatedCount ? ' filled' : '');
+    dot.style.left = (sx - 5) + 'px';
+    dot.style.top  = (sy - 5) + 'px';
+    body.appendChild(dot);
+  }
+}
+
+function updateTable(id, props) {
+  const t = tables.find(x=>x.id===id);
+  if (!t) return;
+  Object.assign(t, props);
+  renderTable(t);
+  updateStats();
+  saveState();
+}
+
+function deleteTable(id) {
+  tables = tables.filter(x=>x.id!==id);
+  const el = document.getElementById('t-'+id);
+  if (el) el.remove();
+  if (selectedId===id) { selectedId=null; hideSidebar(); }
+  updateStats();
+  saveState();
+  toast('שולחן נמחק');
+}
+
+function duplicateTable(id) {
+  const t = tables.find(x=>x.id===id);
+  if (!t) return;
+  const clone = {...t, id:null, x:t.x+30, y:t.y+30, num:getNextNum()};
+  addTable(clone);
+  toast('שולחן שוכפל');
+}
+
+function getNextNum() {
+  const nums = tables.map(t=>t.num);
+  let n=1; while(nums.includes(n)) n++; return n;
+}
+
+// ═══════════════════════════════════════════════════════
+//  DRAG & DROP
+// ═══════════════════════════════════════════════════════
+function onTableMouseDown(e, id) {
+  if (e.button !== 0) return;
+  if (panMode) return;
+  e.stopPropagation();
+  e.preventDefault();
+
+  selectTable(id);
+
+  const t = tables.find(x=>x.id===id);
+  const canvasPos = screenToCanvas(e.clientX, e.clientY);
+  dragOffset = { x: canvasPos.x - t.x, y: canvasPos.y - t.y };
+  dragging = true;
+  dragId = id;
+}
+
+function onCanvasMouseDown(e) {
+  if (e.button === 1 || (e.button === 0 && panMode)) {
+    panning = true;
+    panStart = {x: e.clientX - viewX, y: e.clientY - viewY};
+    document.getElementById('canvas-wrap').classList.add('panning');
+    return;
+  }
+  if (e.button === 0 && !panMode) {
+    // Deselect
+    if (!e.target.closest('.table-el')) {
+      deselectAll();
+    }
+    hideCtxMenu();
+  }
+}
+
+function onCanvasMouseMove(e) {
+  if (panning) {
+    viewX = e.clientX - panStart.x;
+    viewY = e.clientY - panStart.y;
+    applyTransform();
+    return;
+  }
+  if (dragging && dragId !== null) {
+    const pos = screenToCanvas(e.clientX, e.clientY);
+    let nx = pos.x - dragOffset.x;
+    let ny = pos.y - dragOffset.y;
+    if (snapEnabled) { nx=snap(nx); ny=snap(ny); }
+    updateTable(dragId, {x:nx, y:ny});
+    updateSidebarProps();
+    return;
+  }
+  if (resizing && resizeId !== null) {
+    const t = tables.find(x=>x.id===resizeId);
+    const pos = screenToCanvas(e.clientX, e.clientY);
+    let nw = Math.max(50, pos.x - t.x + resizeStart.dw);
+    let nh = Math.max(40, pos.y - t.y + resizeStart.dh);
+    if (snapEnabled) { nw=snap(nw); nh=snap(nh); }
+    updateTable(resizeId, {w:nw, h:nh});
+    updateSidebarProps();
+    return;
+  }
+  if (rotating && rotateId !== null) {
+    const t = tables.find(x=>x.id===rotateId);
+    const wrap = document.getElementById('canvas-wrap').getBoundingClientRect();
+    const cx = (t.x + t.w/2)*zoom + viewX + wrap.left;
+    const cy = (t.y + t.h/2)*zoom + viewY + wrap.top;
+    const angle = Math.atan2(e.clientY-cy, e.clientX-cx) * 180/Math.PI + 90;
+    const rot = snapEnabled ? Math.round(angle/15)*15 : Math.round(angle);
+    updateTable(rotateId, {rot});
+    updateSidebarProps();
+    return;
+  }
+}
+
+function onCanvasMouseUp(e) {
+  panning = false;
+  dragging = false; dragId = null;
+  resizing = false; resizeId = null;
+  rotating = false; rotateId = null;
+  document.getElementById('canvas-wrap').classList.remove('panning');
+}
+function onGlobalMouseUp() { onCanvasMouseUp(); }
+
+function onCanvasClick(e) {
+  hideCtxMenu();
+}
+
+function startResize(e, id) {
+  e.stopPropagation(); e.preventDefault();
+  const t = tables.find(x=>x.id===id);
+  const pos = screenToCanvas(e.clientX, e.clientY);
+  resizeStart = { dw: t.w - (pos.x - t.x), dh: t.h - (pos.y - t.y) };
+  resizing = true; resizeId = id;
+}
+
+function startRotate(e, id) {
+  e.stopPropagation(); e.preventDefault();
+  rotating = true; rotateId = id;
+}
+
+// ═══════════════════════════════════════════════════════
+//  PALETTE DRAG-DROP
+// ═══════════════════════════════════════════════════════
+function paletteDragStart(e, shape, w, h, seats) {
+  paletteDrop = {shape, w, h, seats};
+  e.dataTransfer.setData('text/plain','table');
+}
+
+function onCanvasDragOver(e) { e.preventDefault(); }
+
+function onCanvasDrop(e) {
+  e.preventDefault();
+  if (!paletteDrop) return;
+  const pos = screenToCanvas(e.clientX, e.clientY);
+  let x = pos.x - paletteDrop.w/2;
+  let y = pos.y - paletteDrop.h/2;
+  if (snapEnabled) { x=snap(x); y=snap(y); }
+  addTable({...paletteDrop, x, y, num:getNextNum()});
+  paletteDrop = null;
+  toast('שולחן חדש נוסף!');
+}
+
+// ═══════════════════════════════════════════════════════
+//  SELECTION & SIDEBAR
+// ═══════════════════════════════════════════════════════
+function selectTable(id) {
+  deselectAll();
+  selectedId = id;
+  const el = document.getElementById('t-'+id);
+  if (el) el.classList.add('selected');
+  updateSidebarProps();
+  showSidebar();
+}
+
+function deselectAll() {
+  selectedId = null;
+  document.querySelectorAll('.table-el.selected').forEach(el=>el.classList.remove('selected'));
+  hideSidebar();
+}
+
+function showSidebar() { document.getElementById('props-panel').classList.add('visible'); }
+function hideSidebar() { document.getElementById('props-panel').classList.remove('visible'); }
+
+function updateSidebarProps() {
+  if (!selectedId) return;
+  const t = tables.find(x=>x.id===selectedId);
+  if (!t) return;
+  document.getElementById('p-name').value = t.name;
+  document.getElementById('p-num').value  = t.num;
+  document.getElementById('p-seats').value = t.seats;
+  document.getElementById('p-status').value = t.status;
+  document.getElementById('p-w').value = Math.round(t.w);
+  document.getElementById('p-h').value = Math.round(t.h);
+  document.getElementById('p-rot').value = Math.round(t.rot);
+  document.getElementById('p-group').value = t.group||'';
+  if (t.customColor) document.getElementById('p-color').value = t.customColor;
+}
+
+function updateSelectedProp(key, val) {
+  if (!selectedId) return;
+  updateTable(selectedId, {[key]:val});
+}
+
+// ═══════════════════════════════════════════════════════
+//  CONTEXT MENU
+// ═══════════════════════════════════════════════════════
+function showCtxMenu(e, id) {
+  e.preventDefault(); e.stopPropagation();
+  ctxTargetId = id;
+  selectTable(id);
+  const m = document.getElementById('ctx-menu');
+  m.style.display = 'block';
+  m.style.left = e.clientX + 'px';
+  m.style.top  = e.clientY + 'px';
+  // Boundary fix
+  setTimeout(()=>{
+    const r = m.getBoundingClientRect();
+    if(r.right > innerWidth) m.style.left = (innerWidth-r.width-8)+'px';
+    if(r.bottom > innerHeight) m.style.top = (innerHeight-r.height-8)+'px';
+  },0);
+}
+
+function hideCtxMenu() { document.getElementById('ctx-menu').style.display='none'; }
+
+function ctxAction(action, val) {
+  hideCtxMenu();
+  const id = ctxTargetId;
+  if (!id) return;
+  if (action==='status') updateTable(id,{status:val});
+  else if (action==='duplicate') duplicateTable(id);
+  else if (action==='delete') deleteTable(id);
+  else if (action==='edit') { selectTable(id); }
+  else if (action==='front') bringFront(id);
+  else if (action==='back') sendBack(id);
+}
+
+// ═══════════════════════════════════════════════════════
+//  Z-ORDER
+// ═══════════════════════════════════════════════════════
+function bringFront(id) {
+  const tid = id||selectedId; if(!tid)return;
+  const maxZ = Math.max(...tables.map(t=>t.zIndex));
+  updateTable(tid,{zIndex:maxZ+1});
+}
+function sendBack(id) {
+  const tid = id||selectedId; if(!tid)return;
+  const minZ = Math.min(...tables.map(t=>t.zIndex));
+  updateTable(tid,{zIndex:Math.max(1,minZ-1)});
+}
+
+// ═══════════════════════════════════════════════════════
+//  VIEW TRANSFORM
+// ═══════════════════════════════════════════════════════
+function applyTransform() {
+  document.getElementById('canvas').style.transform = `translate(${viewX}px,${viewY}px) scale(${zoom})`;
+  document.getElementById('zoom-display').textContent = Math.round(zoom*100)+'%';
+  updateMinimap();
+}
+
+function onWheel(e) {
+  e.preventDefault();
+  const wrap = document.getElementById('canvas-wrap').getBoundingClientRect();
+  const mx = e.clientX - wrap.left;
+  const my = e.clientY - wrap.top;
+  const delta = e.deltaY < 0 ? 1.1 : 0.91;
+  const newZoom = Math.max(0.2, Math.min(3, zoom * delta));
+  viewX = mx - (mx - viewX) * (newZoom/zoom);
+  viewY = my - (my - viewY) * (newZoom/zoom);
+  zoom = newZoom;
+  applyTransform();
+}
+
+function zoomIn()  { const c=canvasCenter(); zoomAt(c.x,c.y,1.2); }
+function zoomOut() { const c=canvasCenter(); zoomAt(c.x,c.y,0.83); }
+function zoomAt(mx,my,delta) {
+  const newZoom = Math.max(0.2, Math.min(3, zoom*delta));
+  viewX = mx - (mx-viewX)*(newZoom/zoom);
+  viewY = my - (my-viewY)*(newZoom/zoom);
+  zoom=newZoom; applyTransform();
+}
+function canvasCenter() {
+  const r = document.getElementById('canvas-wrap').getBoundingClientRect();
+  return {x:r.width/2, y:r.height/2};
+}
+function resetView() { zoom=1; viewX=80; viewY=60; applyTransform(); }
+
+function toggleSnap() {
+  snapEnabled = !snapEnabled;
+  document.getElementById('snap-btn').classList.toggle('active', snapEnabled);
+  toast(snapEnabled ? 'הצמד לרשת: פעיל' : 'הצמד לרשת: כבוי');
+}
+
+function togglePanMode() {
+  panMode = !panMode;
+  document.getElementById('pan-btn').classList.toggle('active', panMode);
+}
+
+function snap(v) { return Math.round(v/gridSize)*gridSize; }
+
+function screenToCanvas(sx, sy) {
+  const wrap = document.getElementById('canvas-wrap').getBoundingClientRect();
+  return { x:(sx-wrap.left-viewX)/zoom, y:(sy-wrap.top-viewY)/zoom };
+}
+
+// ═══════════════════════════════════════════════════════
+//  ROOM
+// ═══════════════════════════════════════════════════════
+function updateRoom() {
+  roomW = parseInt(document.getElementById('room-w').value)||1600;
+  roomH = parseInt(document.getElementById('room-h').value)||1000;
+  const rb = document.getElementById('room-boundary');
+  rb.style.left=0; rb.style.top=0;
+  rb.style.width=roomW+'px'; rb.style.height=roomH+'px';
+}
+
+function updateGridSize() {
+  gridSize = parseInt(document.getElementById('grid-size').value)||20;
+}
+
+// ═══════════════════════════════════════════════════════
+//  STATS
+// ═══════════════════════════════════════════════════════
+function updateStats() {
+  const total = tables.length;
+  const totalSeats = tables.reduce((s,t)=>s+t.seats,0);
+  const free = tables.filter(t=>t.status==='free').length;
+  const reserved = tables.filter(t=>t.status==='reserved').length;
+  const seated = tables.filter(t=>t.status==='seated').length;
+  const vip = tables.filter(t=>t.status==='vip').length;
+  document.getElementById('stats-box').innerHTML =
+    `שולחנות: <span>${total}</span><br>
+     סה"כ כסאות: <span>${totalSeats}</span><br>
+     פנויים: <span>${free}</span><br>
+     שמורים: <span>${reserved}</span><br>
+     מאויישים: <span>${seated}</span><br>
+     VIP: <span>${vip}</span>`;
+}
+
+// ═══════════════════════════════════════════════════════
+//  AUTO ARRANGE
+// ═══════════════════════════════════════════════════════
+function autoArrange() {
+  if (!tables.length) return;
+  const cols = Math.ceil(Math.sqrt(tables.length));
+  const padX = 80, padY = 140;
+  const stepX = 180, stepY = 150;
+  tables.forEach((t,i) => {
+    const col = i % cols;
+    const row = Math.floor(i/cols);
+    t.x = padX + col*stepX;
+    t.y = padY + row*stepY;
+    renderTable(t);
+  });
+  toast('שולחנות סודרו אוטומטית!');
+  saveState();
+}
+
+// ═══════════════════════════════════════════════════════
+//  CLEAR
+// ═══════════════════════════════════════════════════════
+function clearAll() {
+  if (!confirm('למחוק את כל השולחנות?')) return;
+  tables.forEach(t => { const el=document.getElementById('t-'+t.id); if(el)el.remove(); });
+  tables=[];
+  deselectAll();
+  updateStats();
+  saveState();
+  toast('כל השולחנות נמחקו');
+}
+
+// ═══════════════════════════════════════════════════════
+//  MODAL
+// ═══════════════════════════════════════════════════════
+function openAddModal() {
+  document.getElementById('m-num').value = getNextNum();
+  document.getElementById('add-modal').classList.add('open');
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+
+function addTableFromModal() {
+  const shape = document.getElementById('m-shape').value;
+  const def = SHAPE_DEFAULTS[shape];
+  addTable({
+    shape,
+    w: def.w, h: def.h,
+    seats: parseInt(document.getElementById('m-seats').value)||6,
+    name: document.getElementById('m-name').value,
+    num: parseInt(document.getElementById('m-num').value)||getNextNum(),
+    status: document.getElementById('m-status').value,
+    x: 300+Math.random()*200,
+    y: 300+Math.random()*200,
+  });
+  closeModal('add-modal');
+  toast('שולחן חדש נוסף!');
+}
+
+// ═══════════════════════════════════════════════════════
+//  KEYBOARD
+// ═══════════════════════════════════════════════════════
+function onKeyDown(e) {
+  if (e.target.tagName==='INPUT'||e.target.tagName==='SELECT') return;
+  if (e.key==='Delete'||e.key==='Backspace') { if(selectedId) deleteSelected(); return; }
+  if (e.key==='Escape') { deselectAll(); hideCtxMenu(); return; }
+  if (e.key==='d'&&e.ctrlKey) { e.preventDefault(); if(selectedId) duplicateSelected(); return; }
+  if (selectedId) {
+    const step = e.shiftKey?10:gridSize;
+    const t = tables.find(x=>x.id===selectedId);
+    if (!t) return;
+    if (e.key==='ArrowLeft')  { e.preventDefault(); updateTable(selectedId,{x:t.x-step}); }
+    if (e.key==='ArrowRight') { e.preventDefault(); updateTable(selectedId,{x:t.x+step}); }
+    if (e.key==='ArrowUp')    { e.preventDefault(); updateTable(selectedId,{y:t.y-step}); }
+    if (e.key==='ArrowDown')  { e.preventDefault(); updateTable(selectedId,{y:t.y+step}); }
+  }
+}
+
+function deleteSelected()    { if(selectedId) deleteTable(selectedId); }
+function duplicateSelected() { if(selectedId) duplicateTable(selectedId); }
+
+// ═══════════════════════════════════════════════════════
+//  TOOLTIP
+// ═══════════════════════════════════════════════════════
+function showTooltip(e, id) {
+  const t = tables.find(x=>x.id===id);
+  if (!t) return;
+  const tip = document.getElementById('tooltip');
+  const statusLabel = {free:'פנוי',reserved:'שמור',seated:'מאויש',vip:'VIP'};
+  tip.innerHTML = `<strong>שולחן ${t.num}</strong> ${t.name?'– '+t.name:''}<br>${statusLabel[t.status]} • ${t.seats} כסאות`;
+  tip.style.display='block';
+  moveTip(e);
+}
+
+function moveTip(e) {
+  const tip=document.getElementById('tooltip');
+  const wrap=document.getElementById('canvas-wrap').getBoundingClientRect();
+  tip.style.left=(e.clientX-wrap.left+12)+'px';
+  tip.style.top=(e.clientY-wrap.top+12)+'px';
+}
+
+function hideTooltip() { document.getElementById('tooltip').style.display='none'; }
+
+// ═══════════════════════════════════════════════════════
+//  MINIMAP
+// ═══════════════════════════════════════════════════════
+function updateMinimap() {
+  const mm = document.getElementById('minimap');
+  const canvas = document.getElementById('minimap-canvas');
+  canvas.width = mm.clientWidth;
+  canvas.height = mm.clientHeight;
+  const ctx2d = canvas.getContext('2d');
+  const scaleX = canvas.width/roomW;
+  const scaleY = canvas.height/roomH;
+
+  ctx2d.clearRect(0,0,canvas.width,canvas.height);
+  ctx2d.fillStyle='rgba(212,160,23,0.06)';
+  ctx2d.fillRect(0,0,roomW*scaleX,roomH*scaleY);
+
+  const colors = {free:'#2e7d2e',reserved:'#c87720',seated:'#8b1a1a',vip:'#d4a017'};
+  tables.forEach(t => {
+    ctx2d.fillStyle = colors[t.status]||'#555';
+    ctx2d.fillRect(t.x*scaleX, t.y*scaleY, t.w*scaleX, t.h*scaleY);
+  });
+
+  // Viewport rect
+  const wrap = document.getElementById('canvas-wrap');
+  const vw = wrap.clientWidth/zoom;
+  const vh = wrap.clientHeight/zoom;
+  const vx = -viewX/zoom;
+  const vy = -viewY/zoom;
+  const vp = document.getElementById('minimap-viewport');
+  vp.style.left   = Math.max(0,vx*scaleX)+'px';
+  vp.style.top    = Math.max(0,vy*scaleY)+'px';
+  vp.style.width  = Math.min(canvas.width, vw*scaleX)+'px';
+  vp.style.height = Math.min(canvas.height, vh*scaleY)+'px';
+}
+
+// ═══════════════════════════════════════════════════════
+//  EXPORT
+// ═══════════════════════════════════════════════════════
+function exportImage() {
+  toast('מכין ייצוא... (השתמש ב-Ctrl+P להדפסה)');
+  window.print();
+}
+
+// ═══════════════════════════════════════════════════════
+//  PERSIST (localStorage)
+// ═══════════════════════════════════════════════════════
+function saveState() {
+  try { localStorage.setItem('hinna-tables', JSON.stringify({tables, nextId})); } catch(e){}
+}
+
+function loadState() {
+  try {
+    const s = localStorage.getItem('hinna-tables');
+    if (!s) return false;
+    const data = JSON.parse(s);
+    nextId = data.nextId||1;
+    data.tables.forEach(t => {
+      tables.push(t);
+      renderTable(t);
+    });
+    updateStats();
+    return true;
+  } catch(e) { return false; }
+}
+
+// ═══════════════════════════════════════════════════════
+//  TOAST
+// ═══════════════════════════════════════════════════════
+let toastTimer;
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+// ═══════════════════════════════════════════════════════
+//  LOAD
+// ═══════════════════════════════════════════════════════
+// Try restoring saved state; otherwise defaults were added above
+if (!loadState()) {
+  // defaults already added by addDefaultTables()
+}
+applyTransform();
+</script>
+</body>
+</html>
