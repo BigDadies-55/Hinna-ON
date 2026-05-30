@@ -33,8 +33,45 @@
     #topbar h1 {
       font-family: 'Suez One', serif; font-size: 1rem;
       color: var(--gold); text-shadow: 0 0 10px rgba(245,197,66,0.35);
-      flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
+
+    /* ══ LAYOUT TABS ══ */
+    #layout-bar {
+      background: rgba(0,0,0,0.35);
+      border-bottom: 1px solid rgba(212,160,23,0.18);
+      display: flex; align-items: center;
+      padding: 0 12px; gap: 2px; flex-shrink: 0;
+      overflow-x: auto; min-height: 32px;
+    }
+    #layout-bar::-webkit-scrollbar { height: 2px; }
+    #layout-bar::-webkit-scrollbar-thumb { background: rgba(212,160,23,0.3); }
+    .layout-tab {
+      display: flex; align-items: center; gap: 5px;
+      padding: 4px 12px; border-radius: 6px 6px 0 0;
+      cursor: pointer; font-size: 0.72rem; font-weight: 600;
+      color: rgba(255,243,176,0.5);
+      border: 1px solid transparent; border-bottom: none;
+      transition: all 0.15s; white-space: nowrap; position: relative;
+      background: transparent;
+    }
+    .layout-tab:hover { color: var(--gold-light); background: rgba(212,160,23,0.08); }
+    .layout-tab.active {
+      color: var(--gold); background: rgba(212,160,23,0.12);
+      border-color: rgba(212,160,23,0.3);
+    }
+    .layout-tab .tab-x {
+      font-size: 0.6rem; opacity: 0; color: #f88;
+      transition: opacity 0.15s; cursor: pointer; padding: 0 1px;
+    }
+    .layout-tab:hover .tab-x { opacity: 1; }
+    .layout-tab .tab-x:hover { color: #f44; }
+    #add-layout-btn {
+      padding: 3px 10px; font-size: 1rem; color: rgba(212,160,23,0.5);
+      cursor: pointer; border-radius: 5px; transition: all 0.15s;
+      background: none; border: none; line-height: 1;
+    }
+    #add-layout-btn:hover { color: var(--gold); background: rgba(212,160,23,0.12); }
     .tb-group { display: flex; align-items: center; gap: 2px; background: rgba(255,255,255,0.05); border: 1px solid rgba(212,160,23,0.2); border-radius: 8px; padding: 2px 4px; }
     .tbi {
       background: none; border: none; color: var(--gold-light);
@@ -287,6 +324,35 @@
     .btn-p { background: var(--gold-deep); color: var(--ink); border: none; border-radius: 7px; padding: 7px 18px; cursor: pointer; font-weight: 700; font-size: 0.78rem; font-family: 'Heebo', sans-serif; }
     .btn-c { background: transparent; color: var(--gold-light); border: 1px solid rgba(212,160,23,0.3); border-radius: 7px; padding: 7px 14px; cursor: pointer; font-size: 0.78rem; font-family: 'Heebo', sans-serif; }
 
+    /* ══ STATS MODAL ══ */
+    #stats-modal .modal-box { min-width: 320px; }
+    .stat-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+    .stat-label { font-size: 0.72rem; color: rgba(255,243,176,0.65); }
+    .stat-val { font-size: 1.1rem; font-weight: 900; color: var(--gold); }
+    .stat-bar-wrap { height: 8px; background: rgba(255,255,255,0.07); border-radius: 4px; margin-bottom: 12px; overflow: hidden; }
+    .stat-bar { height: 100%; border-radius: 4px; transition: width 0.4s; }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+    .stat-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,160,23,0.2); border-radius: 8px; padding: 8px 12px; text-align: center; }
+    .stat-card .sc-num { font-size: 1.4rem; font-weight: 900; }
+    .stat-card .sc-lbl { font-size: 0.62rem; color: rgba(255,243,176,0.5); margin-top: 2px; }
+    .stat-card.green  .sc-num { color: #5ec85e; }
+    .stat-card.orange .sc-num { color: #e8a850; }
+    .stat-card.red    .sc-num { color: #d06060; }
+    .stat-card.gold   .sc-num { color: var(--gold); }
+    .reset-evening-btn { width: 100%; padding: 9px; background: rgba(200,50,50,0.15); border: 1px solid rgba(200,50,50,0.35); border-radius: 8px; color: #f99; cursor: pointer; font-size: 0.78rem; font-family: 'Heebo',sans-serif; font-weight: 700; margin-top: 4px; transition: background 0.15s; }
+    .reset-evening-btn:hover { background: rgba(200,50,50,0.3); }
+
+    /* ══ MOBILE ══ */
+    @media (max-width: 600px) {
+      #topbar h1 { font-size: 0.82rem; }
+      #sidebar { width: 160px; }
+      .tb-group { gap: 0; padding: 1px 2px; }
+      .tbi { padding: 4px 5px; font-size: 0.8rem; }
+      #edit-popup { min-width: 260px; max-width: 95vw; }
+      .pf-grid { grid-template-columns: 1fr; }
+      .pf.full { grid-column: span 1; }
+    }
+
     /* bg presets */
     .bg-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin-bottom: 12px; }
     .bg-swatch { height: 60px; border-radius: 8px; cursor: pointer; border: 2px solid transparent; overflow: hidden; display: flex; align-items: flex-end; transition: all 0.18s; }
@@ -303,7 +369,7 @@
 
 <!-- TOPBAR -->
 <div id="topbar">
-  <h1>✨ פריסת שולחנות האירוע</h1>
+  <h1>✨ פריסת שולחנות</h1>
 
   <div class="tb-group">
     <button class="tbi" onclick="openAddModal()" title="הוסף שולחן חדש">＋ שולחן</button>
@@ -314,7 +380,7 @@
   </div>
 
   <div class="tb-group">
-    <button class="tbi" onclick="zoomOut()" title="הקטן (גלגלת)">－</button>
+    <button class="tbi" onclick="zoomOut()" title="הקטן">－</button>
     <span id="zoom-lbl">100%</span>
     <button class="tbi" onclick="zoomIn()" title="הגדל">＋</button>
     <button class="tbi" onclick="resetView()" title="אפס תצוגה">⌖</button>
@@ -324,11 +390,18 @@
   <div class="tb-group">
     <button class="tbi" onclick="autoArrange()" title="סדר אוטומטי">⚡</button>
     <button class="tbi" onclick="openBgModal()" title="רקע האולם">🖼</button>
+    <button class="tbi" onclick="openStatsModal()" title="סטטיסטיקות ערב">📊</button>
     <button class="tbi" onclick="exportImage()" title="הדפס / ייצא">🖨</button>
     <button class="tbi danger" onclick="clearAll()" title="נקה הכל">🗑</button>
   </div>
 
-  <button class="tbi" id="sb-top-btn" onclick="toggleSidebar()" title="הצג/הסתר פאנל שולחנות">◧</button>
+  <button class="tbi" onclick="toggleSidebar()" title="הצג/הסתר פאנל">◧</button>
+</div>
+
+<!-- LAYOUT TABS -->
+<div id="layout-bar">
+  <!-- filled by JS -->
+  <button id="add-layout-btn" onclick="addLayout()" title="הוסף חדר / אזור חדש">＋</button>
 </div>
 
 <!-- WORKSPACE -->
@@ -479,13 +552,33 @@
   </div>
 </div>
 
+<!-- STATS MODAL -->
+<div class="modal-overlay" id="stats-modal">
+  <div class="modal-box">
+    <h2>📊 סטטיסטיקות ערב</h2>
+    <div class="stat-grid" id="stat-cards"></div>
+    <div id="stat-occupancy-lbl" style="font-size:0.68rem;color:rgba(212,160,23,0.65);margin-bottom:4px"></div>
+    <div class="stat-bar-wrap"><div class="stat-bar" id="stat-bar" style="background:var(--gold-deep)"></div></div>
+    <div id="stat-breakdown" style="font-size:0.7rem;color:rgba(255,243,176,0.6);margin-bottom:14px;line-height:2"></div>
+    <button class="reset-evening-btn" onclick="resetEvening()">🔄 איפוס ערב – כל השולחנות לפנוי</button>
+    <div class="modal-btns"><button class="btn-p" onclick="closeM('stats-modal')">סגור</button></div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script>
 /* ═══════════════════════════════════════
    STATE
 ═══════════════════════════════════════ */
-let tables=[], nextId=1, selId=null, ctxId=null;
+// Multi-layout
+let layouts=[];      // [{id,name,tables,nextId,bg}]
+let activeLayoutId=null;
+
+// current layout shortcuts (pointers into active layout)
+let tables=[], nextId=1;
+
+let selId=null, ctxId=null;
 let viewX=80, viewY=60, zoom=1, gridSize=20, snapOn=true;
 let panning=false, panStart={x:0,y:0};
 let dragId=null, dragOff={x:0,y:0}, didDrag=false;
@@ -495,6 +588,9 @@ let palDrop=null;
 let roomW=1600, roomH=1000;
 let activeBg=0;
 let sbOpen=true;
+
+// touch
+let touches={}, pinchDist0=null, pinchZoom0=null;
 
 /* popup drag */
 let ppDragging=false, ppDragOff={x:0,y:0};
@@ -514,7 +610,7 @@ const BGS=[
 ═══════════════════════════════════════ */
 window.addEventListener('DOMContentLoaded',()=>{
   updateRoom();
-  if(!loadState()) addDefaults();
+  loadAllLayouts();
   setInterval(updateMinimap,600);
   document.addEventListener('keydown',onKey);
   document.addEventListener('mouseup',onGlobalUp);
@@ -530,24 +626,25 @@ window.addEventListener('DOMContentLoaded',()=>{
     e.preventDefault();
   });
 
+  /* touch */
+  const cw=document.getElementById('canvas-wrap');
+  cw.addEventListener('touchstart',onTouchStart,{passive:false});
+  cw.addEventListener('touchmove', onTouchMove, {passive:false});
+  cw.addEventListener('touchend',  onTouchEnd,  {passive:false});
+
   updateStats();
-  // fit all tables into view on load
-  setTimeout(fitView, 50);
+  setTimeout(fitView,80);
 });
 
 function addDefaults(){
-  addT({shape:'round',w:110,h:110,seats:2,name:'שולחן הזוג',num:1,status:'vip',x:750,y:120});
-  addT({shape:'round',w:100,h:100,seats:8,name:'משפחת כהן',num:2,status:'reserved',x:200,y:200});
-  addT({shape:'round',w:100,h:100,seats:8,name:'משפחת לוי',num:3,status:'reserved',x:350,y:200});
-  addT({shape:'round',w:100,h:100,seats:8,name:'צד חתן',num:4,status:'free',x:200,y:340});
-  addT({shape:'round',w:100,h:100,seats:8,name:'צד כלה',num:5,status:'free',x:350,y:340});
-  addT({shape:'round',w:90,h:90,seats:6,name:'חברים א',num:6,status:'free',x:520,y:200});
-  addT({shape:'round',w:90,h:90,seats:6,name:'חברים ב',num:7,status:'free',x:520,y:330});
-  addT({shape:'rect',w:160,h:80,seats:10,name:'משפחה מורחבת',num:8,status:'free',x:900,y:200});
-  addT({shape:'rect',w:160,h:80,seats:10,name:'קולגות',num:9,status:'free',x:1100,y:200});
-  addT({shape:'rect',w:160,h:80,seats:10,name:'שכנים',num:10,status:'free',x:900,y:330});
-  addT({shape:'long',w:220,h:70,seats:14,name:'שולחן ארוך א',num:11,status:'free',x:850,y:720});
-  addT({shape:'long',w:220,h:70,seats:14,name:'שולחן ארוך ב',num:12,status:'free',x:1100,y:720});
+  addT({shape:'round',w:90,h:90,seats:4,name:'',num:1,status:'free',x:100,y:100});
+  addT({shape:'round',w:90,h:90,seats:4,name:'',num:2,status:'free',x:230,y:100});
+  addT({shape:'round',w:90,h:90,seats:4,name:'',num:3,status:'free',x:360,y:100});
+  addT({shape:'round',w:100,h:100,seats:6,name:'',num:4,status:'free',x:100,y:240});
+  addT({shape:'round',w:100,h:100,seats:6,name:'',num:5,status:'free',x:250,y:240});
+  addT({shape:'rect',w:140,h:75,seats:6,name:'',num:6,status:'free',x:400,y:240});
+  addT({shape:'rect',w:140,h:75,seats:6,name:'',num:7,status:'free',x:100,y:370});
+  addT({shape:'rect',w:140,h:75,seats:6,name:'',num:8,status:'free',x:280,y:370});
 }
 
 /* ═══════════════════════════════════════
@@ -981,16 +1078,205 @@ function addFromModal(){
 }
 
 /* ═══════════════════════════════════════
-   PERSIST
+   MULTI-LAYOUT MANAGEMENT
 ═══════════════════════════════════════ */
-function save(){try{localStorage.setItem('hinna-t',JSON.stringify({tables,nextId}));}catch(e){}}
-function loadState(){
+function loadAllLayouts(){
   try{
-    const s=localStorage.getItem('hinna-t');if(!s)return false;
-    const d=JSON.parse(s);nextId=d.nextId||1;
-    d.tables.forEach(t=>{tables.push(t);renderT(t);});
-    updateStats();return true;
-  }catch(e){return false;}
+    const raw=localStorage.getItem('rest-layouts');
+    if(raw){
+      layouts=JSON.parse(raw);
+      const aid=localStorage.getItem('rest-active');
+      activeLayoutId=aid&&layouts.find(l=>l.id===aid)?aid:layouts[0].id;
+    }
+  }catch(e){}
+  if(!layouts.length){
+    const id='l'+Date.now();
+    layouts=[{id,name:'אולם ראשי',tables:[],nextId:1,bg:0}];
+    activeLayoutId=id;
+  }
+  renderLayoutTabs();
+  switchLayout(activeLayoutId, /*isInit*/true);
+}
+
+function renderLayoutTabs(){
+  const bar=document.getElementById('layout-bar');
+  const addBtn=document.getElementById('add-layout-btn');
+  bar.querySelectorAll('.layout-tab').forEach(el=>el.remove());
+  layouts.forEach(l=>{
+    const tab=document.createElement('div');
+    tab.className='layout-tab'+(l.id===activeLayoutId?' active':'');
+    tab.dataset.id=l.id;
+    tab.innerHTML=`<span ondblclick="renameLayout('${l.id}')">${l.name}</span>`+
+      (layouts.length>1?`<span class="tab-x" onclick="deleteLayout('${l.id}')">✕</span>`:'');
+    tab.addEventListener('click',e=>{if(!e.target.classList.contains('tab-x'))switchLayout(l.id);});
+    bar.insertBefore(tab,addBtn);
+  });
+}
+
+function switchLayout(id, isInit=false){
+  if(!isInit) saveCurrentLayout();
+  activeLayoutId=id;
+  // clear canvas
+  document.querySelectorAll('.table-el').forEach(el=>el.remove());
+  tables=[];
+  const layout=layouts.find(l=>l.id===id);
+  nextId=layout.nextId||1;
+  activeBg=layout.bg||0;
+  setBg(activeBg);
+  layout.tables.forEach(t=>{tables.push(t);renderT(t);});
+  renderLayoutTabs();
+  closeEditPopup(); deselect();
+  updateStats();
+  localStorage.setItem('rest-active',id);
+  setTimeout(fitView,60);
+}
+
+function saveCurrentLayout(){
+  const layout=layouts.find(l=>l.id===activeLayoutId);
+  if(!layout)return;
+  layout.tables=tables.map(t=>({...t}));
+  layout.nextId=nextId;
+  layout.bg=activeBg;
+  persistLayouts();
+}
+
+function persistLayouts(){
+  saveCurrentLayout();
+  try{localStorage.setItem('rest-layouts',JSON.stringify(layouts));}catch(e){}
+}
+
+function save(){persistLayouts();}
+
+function addLayout(){
+  const name=prompt('שם החדר / האזור החדש:','חדר חדש');
+  if(!name)return;
+  const id='l'+Date.now();
+  layouts.push({id,name,tables:[],nextId:1,bg:0});
+  persistLayouts();
+  switchLayout(id);
+  toast('פריסה חדשה: '+name);
+}
+
+function deleteLayout(id){
+  if(layouts.length<=1){toast('לא ניתן למחוק פריסה אחרונה');return;}
+  if(!confirm('למחוק פריסה זו?'))return;
+  layouts=layouts.filter(l=>l.id!==id);
+  persistLayouts();
+  switchLayout(layouts[0].id);
+  toast('פריסה נמחקה');
+}
+
+function renameLayout(id){
+  const layout=layouts.find(l=>l.id===id);if(!layout)return;
+  const name=prompt('שם חדש:',layout.name);
+  if(!name)return;
+  layout.name=name;
+  persistLayouts();
+  renderLayoutTabs();
+}
+
+/* ═══════════════════════════════════════
+   TOUCH SUPPORT
+═══════════════════════════════════════ */
+function getTouchMid(ev){
+  const t=ev.touches;
+  if(t.length===1)return{x:t[0].clientX,y:t[0].clientY};
+  return{x:(t[0].clientX+t[1].clientX)/2,y:(t[0].clientY+t[1].clientY)/2};
+}
+function getTouchDist(ev){
+  const t=ev.touches;
+  if(t.length<2)return null;
+  const dx=t[0].clientX-t[1].clientX, dy=t[0].clientY-t[1].clientY;
+  return Math.hypot(dx,dy);
+}
+
+let lastTap=0;
+function onTouchStart(e){
+  e.preventDefault();
+  const mid=getTouchMid(e);
+  if(e.touches.length===2){
+    pinchDist0=getTouchDist(e); pinchZoom0=zoom;
+    panStart={x:mid.x-viewX,y:mid.y-viewY};
+    panning=true;
+  } else if(e.touches.length===1){
+    const target=e.target.closest('.table-el');
+    if(target){
+      const id=+target.id.replace('t-','');
+      const t=tables.find(x=>x.id===id);
+      const p=s2c(mid.x,mid.y);
+      dragOff={x:p.x-t.x,y:p.y-t.y}; dragId=id; didDrag=false;
+      selectT(id);
+      // double-tap to open popup
+      const now=Date.now();
+      if(now-lastTap<350){openEditPopup(id);}
+      lastTap=now;
+    } else {
+      panStart={x:mid.x-viewX,y:mid.y-viewY}; panning=true;
+    }
+  }
+}
+function onTouchMove(e){
+  e.preventDefault();
+  const mid=getTouchMid(e);
+  if(e.touches.length===2&&pinchDist0!=null){
+    const dist=getTouchDist(e);
+    const newZoom=Math.max(0.2,Math.min(3,pinchZoom0*(dist/pinchDist0)));
+    const r=document.getElementById('canvas-wrap').getBoundingClientRect();
+    const mx=mid.x-r.left, my=mid.y-r.top;
+    viewX=mx-(mx-viewX)*(newZoom/zoom); viewY=my-(my-viewY)*(newZoom/zoom);
+    zoom=newZoom;
+    viewX=mid.x-panStart.x; viewY=mid.y-panStart.y;
+    applyTransform(); return;
+  }
+  if(panning){viewX=mid.x-panStart.x;viewY=mid.y-panStart.y;applyTransform();return;}
+  if(dragId){
+    const p=s2c(mid.x,mid.y);
+    let nx=p.x-dragOff.x, ny=p.y-dragOff.y;
+    if(snapOn){nx=snp(nx);ny=snp(ny);}
+    updT(dragId,{x:nx,y:ny}); didDrag=true;
+  }
+}
+function onTouchEnd(e){
+  e.preventDefault();
+  pinchDist0=null; pinchZoom0=null;
+  panning=false; dragId=null; resizing=false; rotating=false;
+}
+
+/* ═══════════════════════════════════════
+   STATS MODAL
+═══════════════════════════════════════ */
+function openStatsModal(){
+  const free=tables.filter(t=>t.status==='free').length;
+  const res=tables.filter(t=>t.status==='reserved').length;
+  const sea=tables.filter(t=>t.status==='seated').length;
+  const vip=tables.filter(t=>t.status==='vip').length;
+  const total=tables.length;
+  const totalSeats=tables.reduce((s,t)=>s+t.seats,0);
+  const occupiedSeats=tables.filter(t=>t.status==='seated'||t.status==='vip').reduce((s,t)=>s+t.seats,0);
+  const pct=total?Math.round((sea+vip)/total*100):0;
+
+  document.getElementById('stat-cards').innerHTML=
+    `<div class="stat-card green"><div class="sc-num">${free}</div><div class="sc-lbl">🟢 פנויים</div></div>`+
+    `<div class="stat-card orange"><div class="sc-num">${res}</div><div class="sc-lbl">🟠 שמורים</div></div>`+
+    `<div class="stat-card red"><div class="sc-num">${sea}</div><div class="sc-lbl">🔴 מאויישים</div></div>`+
+    `<div class="stat-card gold"><div class="sc-num">${vip}</div><div class="sc-lbl">⭐ VIP</div></div>`;
+
+  document.getElementById('stat-occupancy-lbl').textContent=`תפוסה: ${pct}% (${sea+vip} מתוך ${total} שולחנות)`;
+  document.getElementById('stat-bar').style.width=pct+'%';
+  document.getElementById('stat-breakdown').innerHTML=
+    `סה"כ שולחנות: <b style="color:var(--gold)">${total}</b> &nbsp;|&nbsp; `+
+    `סה"כ כסאות: <b style="color:var(--gold)">${totalSeats}</b> &nbsp;|&nbsp; `+
+    `כסאות מאויישים: <b style="color:var(--gold)">${occupiedSeats}</b>`;
+
+  document.getElementById('stats-modal').classList.add('open');
+}
+
+function resetEvening(){
+  if(!confirm('לאפס את כל השולחנות לפנוי?'))return;
+  tables.forEach(t=>{t.status='free';renderT(t);});
+  updateStats(); save();
+  closeM('stats-modal');
+  toast('כל השולחנות אופסו לפנוי');
 }
 
 /* ═══════════════════════════════════════
