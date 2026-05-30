@@ -530,7 +530,9 @@ window.addEventListener('DOMContentLoaded',()=>{
     e.preventDefault();
   });
 
-  applyTransform(); updateStats();
+  updateStats();
+  // fit all tables into view on load
+  setTimeout(fitView, 50);
 });
 
 function addDefaults(){
